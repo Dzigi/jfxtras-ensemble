@@ -24,7 +24,7 @@
  *   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package ensemble.samples.gauges.flipchar;
+package ensemble.samples.gauges.splitflap;
 
 import ensemble.Sample;
 import java.util.Calendar;
@@ -34,23 +34,23 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import jfxtras.labs.scene.control.gauge.FlipChar;
+import jfxtras.labs.scene.control.gauge.SplitFlap;
 
 /**
  * FlipChar control.
  *
  * @see jxftras.labs.scene.control.gauge.FlipChar
  */
-public class FlipCharGaugesSample extends Sample {
+public class SplitFlapGaugesSample extends Sample {
     private static final Random  RND          = new Random();
     private static final long    TIME_PERIOD  = 1000000000l;
     private long                 lastTimeCall = 0;
-    private FlipChar             flip1;
-    private FlipChar             flip2;
-    private FlipChar             flip3;
-    private FlipChar             flip4;
-    private FlipChar             flip5;
-    private FlipChar             flip6;
+    private SplitFlap            flip1;
+    private SplitFlap            flip2;
+    private SplitFlap            flip3;
+    private SplitFlap            flip4;
+    private SplitFlap            flip5;
+    private SplitFlap            flip6;
     private final AnimationTimer TIMER        = new AnimationTimer() {
         @Override
         public void handle(long l) {
@@ -62,31 +62,43 @@ public class FlipCharGaugesSample extends Sample {
         }
     };
 
-    public FlipCharGaugesSample() {
+    public SplitFlapGaugesSample() {
         super(600, 600);
 
         // Create some controls
-        flip1 = new FlipChar();
-        flip1.setPrefSize(50, 100);
-        flip1.setType(FlipChar.Type.TIME);
+        flip1 = new SplitFlap();
+        flip1.setFlipTimeInMs(350);
+        flip1.setPrefSize(70, 140);
+        flip1.setCharacterColor(Color.rgb(200, 200, 200));
+        flip1.setType(SplitFlap.Type.TIME);
 
-        flip2 = new FlipChar();
-        flip2.setPrefSize(50, 100);
+        flip2 = new SplitFlap();
+        flip2.setFlipTimeInMs(350);
+        flip2.setCharacterColor(Color.rgb(200, 200, 200));
+        flip2.setPrefSize(70, 140);
 
-        flip3 = new FlipChar();
-        flip3.setPrefSize(50, 100);
-        flip3.setType(FlipChar.Type.TIME);
+        flip3 = new SplitFlap();
+        flip3.setFlipTimeInMs(350);
+        flip3.setPrefSize(70, 140);
+        flip3.setCharacterColor(Color.rgb(200, 200, 200));
+        flip3.setType(SplitFlap.Type.TIME);
 
-        flip4 = new FlipChar();
-        flip4.setPrefSize(50, 100);
+        flip4 = new SplitFlap();
+        flip4.setFlipTimeInMs(350);
+        flip4.setCharacterColor(Color.rgb(200, 200, 200));
+        flip4.setPrefSize(70, 140);
 
-        flip5 = new FlipChar();
-        flip5.setPrefSize(50, 100);
-        flip5.setType(FlipChar.Type.TIME);
+        flip5 = new SplitFlap();
+        flip5.setFlipTimeInMs(350);
+        flip5.setPrefSize(70, 140);
+        flip5.setType(SplitFlap.Type.TIME);
+        flip5.setCharacterColor(Color.rgb(200, 200, 200));
         flip5.setColor(Color.rgb(220, 20, 0));
 
-        flip6 = new FlipChar();
-        flip6.setPrefSize(50, 100);
+        flip6 = new SplitFlap();
+        flip6.setFlipTimeInMs(350);
+        flip6.setPrefSize(70, 140);
+        flip6.setCharacterColor(Color.rgb(200, 200, 200));
         flip6.setColor(Color.rgb(220, 20, 0));
 
         // Layout

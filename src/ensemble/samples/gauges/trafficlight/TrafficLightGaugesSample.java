@@ -32,7 +32,7 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import jfxtras.labs.scene.control.gauge.Trafficlight;
+import jfxtras.labs.scene.control.gauge.TrafficLight;
 
 /**
  * Trafficlight.
@@ -43,7 +43,7 @@ public class TrafficLightGaugesSample extends Sample {
     private static final Random  RND          = new Random();
     private static final long    DATA_PERIOD  = 2000000000l;
     private long                 lastDataCall = 0;
-    private Trafficlight         trafficLight;
+    private TrafficLight         trafficLight;
     private final AnimationTimer TIMER        = new AnimationTimer() {
         @Override
         public void handle(long l) {
@@ -85,7 +85,7 @@ public class TrafficLightGaugesSample extends Sample {
         super(600, 600);
 
         // Create some controls
-        trafficLight = new Trafficlight();
+        trafficLight = new TrafficLight();
 
         // Layout
         final GridPane pane = new GridPane();
