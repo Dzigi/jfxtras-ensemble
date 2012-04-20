@@ -104,7 +104,7 @@ public class SplitFlapGaugesSample extends Sample {
         // Layout
         final GridPane pane = new GridPane();
         pane.setPadding(new Insets(5));
-        pane.setHgap(5);
+        pane.setHgap(0);
         pane.setVgap(5);
         pane.setAlignment(Pos.TOP_CENTER);
 
