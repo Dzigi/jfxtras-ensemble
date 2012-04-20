@@ -17,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import jfxtras.labs.scene.control.NumberSpinner;
+import jfxtras.labs.scene.control.BigDecimalField;
 
 /**
  * A spinner control that holds arbitrary formatted BigDecimal numbers. Three
@@ -34,10 +34,10 @@ public class BigDecimalSpinnerSample extends Sample {
         root.setHgap(10);
         root.setVgap(10);
         root.setPadding(new Insets(10, 10, 10, 10));
-        final NumberSpinner defaultSpinner = new NumberSpinner();
-        final NumberSpinner decimalFormat = new NumberSpinner(BigDecimal.ZERO, new BigDecimal("0.05"), new DecimalFormat("#,##0.00"));
-        final NumberSpinner percent = new NumberSpinner(BigDecimal.ZERO, new BigDecimal("0.01"), NumberFormat.getPercentInstance());
-        final NumberSpinner localizedCurrency = new NumberSpinner(BigDecimal.ZERO, new BigDecimal("0.01"), NumberFormat.getCurrencyInstance(Locale.UK));
+        final BigDecimalField defaultSpinner = new BigDecimalField();
+        final BigDecimalField decimalFormat = new BigDecimalField(BigDecimal.ZERO, new BigDecimal("0.05"), new DecimalFormat("#,##0.00"));
+        final BigDecimalField percent = new BigDecimalField(BigDecimal.ZERO, new BigDecimal("0.01"), NumberFormat.getPercentInstance());
+        final BigDecimalField localizedCurrency = new BigDecimalField(BigDecimal.ZERO, new BigDecimal("0.01"), NumberFormat.getCurrencyInstance(Locale.UK));
         root.addRow(1, new Label("default"), defaultSpinner);
         root.addRow(2, new Label("custom decimal format"), decimalFormat);
         root.addRow(3, new Label("percent"), percent);
@@ -51,9 +51,9 @@ public class BigDecimalSpinnerSample extends Sample {
             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
                 System.out.println("index" + arg2.intValue());
                 Scene scene = styles.getScene();
-                String pathSquared = NumberSpinner.class.getResource("NumberSpinnerSquared.css").toExternalForm();
-                String pathRounded = NumberSpinner.class.getResource("NumberSpinnerRounded.css").toExternalForm();
-                String pathThommis = NumberSpinner.class.getResource("NumberSpinnerThommis.css").toExternalForm();
+                String pathSquared = BigDecimalField.class.getResource("NumberSpinnerSquared.css").toExternalForm();
+                String pathRounded = BigDecimalField.class.getResource("NumberSpinnerRounded.css").toExternalForm();
+                String pathThommis = BigDecimalField.class.getResource("NumberSpinnerThommis.css").toExternalForm();
                 scene.getStylesheets().removeAll(pathSquared, pathRounded, pathThommis);
                 if (arg2.intValue() == 0) {
                     scene.getStylesheets().add(pathSquared);

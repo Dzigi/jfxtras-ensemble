@@ -68,36 +68,36 @@ public class SplitFlapGaugesSample extends Sample {
         // Create some controls
         flip1 = new SplitFlap();
         flip1.setFlipTimeInMs(350);
-        flip1.setPrefSize(70, 140);
+        flip1.setPrefSize(100, 200);
         flip1.setCharacterColor(Color.rgb(200, 200, 200));
         flip1.setType(SplitFlap.Type.TIME);
 
         flip2 = new SplitFlap();
         flip2.setFlipTimeInMs(350);
         flip2.setCharacterColor(Color.rgb(200, 200, 200));
-        flip2.setPrefSize(70, 140);
+        flip2.setPrefSize(100, 200);
 
         flip3 = new SplitFlap();
         flip3.setFlipTimeInMs(350);
-        flip3.setPrefSize(70, 140);
+        flip3.setPrefSize(100, 200);
         flip3.setCharacterColor(Color.rgb(200, 200, 200));
         flip3.setType(SplitFlap.Type.TIME);
 
         flip4 = new SplitFlap();
         flip4.setFlipTimeInMs(350);
         flip4.setCharacterColor(Color.rgb(200, 200, 200));
-        flip4.setPrefSize(70, 140);
+        flip4.setPrefSize(100, 200);
 
         flip5 = new SplitFlap();
         flip5.setFlipTimeInMs(350);
-        flip5.setPrefSize(70, 140);
+        flip5.setPrefSize(100, 200);
         flip5.setType(SplitFlap.Type.TIME);
         flip5.setCharacterColor(Color.rgb(200, 200, 200));
         flip5.setColor(Color.rgb(220, 20, 0));
 
         flip6 = new SplitFlap();
         flip6.setFlipTimeInMs(350);
-        flip6.setPrefSize(70, 140);
+        flip6.setPrefSize(100, 200);
         flip6.setCharacterColor(Color.rgb(200, 200, 200));
         flip6.setColor(Color.rgb(220, 20, 0));
 
