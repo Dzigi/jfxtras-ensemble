@@ -51,6 +51,7 @@ public class SplitFlapGaugesSample extends Sample {
     private SplitFlap            flip4;
     private SplitFlap            flip5;
     private SplitFlap            flip6;
+    private String[]             timeLookup = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
     private final AnimationTimer TIMER        = new AnimationTimer() {
         @Override
         public void handle(long l) {
@@ -68,38 +69,41 @@ public class SplitFlapGaugesSample extends Sample {
         // Create some controls
         flip1 = new SplitFlap();
         flip1.setFlipTimeInMs(350);
-        flip1.setPrefSize(100, 200);
-        flip1.setCharacterColor(Color.rgb(200, 200, 200));
-        flip1.setType(SplitFlap.Type.TIME);
+        flip1.setPrefSize(100, 172);
+        flip1.setTextColor(Color.rgb(200, 200, 200));
+        flip1.setSelection(SplitFlap.TIME);
 
         flip2 = new SplitFlap();
         flip2.setFlipTimeInMs(350);
-        flip2.setCharacterColor(Color.rgb(200, 200, 200));
-        flip2.setPrefSize(100, 200);
+        flip2.setTextColor(Color.rgb(200, 200, 200));
+        flip2.setPrefSize(100, 172);
+        flip1.setSelection(timeLookup);
 
         flip3 = new SplitFlap();
         flip3.setFlipTimeInMs(350);
-        flip3.setPrefSize(100, 200);
-        flip3.setCharacterColor(Color.rgb(200, 200, 200));
-        flip3.setType(SplitFlap.Type.TIME);
+        flip3.setPrefSize(100, 172);
+        flip3.setTextColor(Color.rgb(200, 200, 200));
+        flip3.setSelection(SplitFlap.TIME);
 
         flip4 = new SplitFlap();
         flip4.setFlipTimeInMs(350);
-        flip4.setCharacterColor(Color.rgb(200, 200, 200));
-        flip4.setPrefSize(100, 200);
+        flip4.setTextColor(Color.rgb(200, 200, 200));
+        flip4.setPrefSize(100, 172);
+        flip4.setSelection(timeLookup);
 
         flip5 = new SplitFlap();
         flip5.setFlipTimeInMs(350);
-        flip5.setPrefSize(100, 200);
-        flip5.setType(SplitFlap.Type.TIME);
-        flip5.setCharacterColor(Color.rgb(200, 200, 200));
+        flip5.setPrefSize(100, 172);
+        flip5.setSelection(SplitFlap.TIME);
+        flip5.setTextColor(Color.rgb(200, 200, 200));
         flip5.setColor(Color.rgb(220, 20, 0));
 
         flip6 = new SplitFlap();
         flip6.setFlipTimeInMs(350);
-        flip6.setPrefSize(100, 200);
-        flip6.setCharacterColor(Color.rgb(200, 200, 200));
+        flip6.setPrefSize(100, 172);
+        flip6.setTextColor(Color.rgb(200, 200, 200));
         flip6.setColor(Color.rgb(220, 20, 0));
+        flip6.setSelection(timeLookup);
 
         // Layout
         final GridPane pane = new GridPane();
@@ -111,8 +115,10 @@ public class SplitFlapGaugesSample extends Sample {
         // Add controls to the layout
         pane.add(flip1, 1, 1);
         pane.add(flip2, 2, 1);
+        GridPane.setMargin(flip2, new Insets(0, 10, 0, 0));
         pane.add(flip3, 6, 1);
         pane.add(flip4, 7, 1);
+        GridPane.setMargin(flip4, new Insets(0, 10, 0, 0));
         pane.add(flip5, 11, 1);
         pane.add(flip6, 12, 1);
 
@@ -127,29 +133,29 @@ public class SplitFlapGaugesSample extends Sample {
 
         // Hours
         if (hh < 10) {
-            flip1.setCharacter("0");
-            flip2.setCharacter(Integer.toString(hh));
+            flip1.setText("0");
+            flip2.setText(Integer.toString(hh));
         } else {
-            flip1.setCharacter(Integer.toString(hh).substring(0, 1));
-            flip2.setCharacter(Integer.toString(hh).substring(1, 2));
+            flip1.setText(Integer.toString(hh).substring(0, 1));
+            flip2.setText(Integer.toString(hh).substring(1, 2));
         }
 
         // Minutes
         if (mm < 10) {
-            flip3.setCharacter("0");
-            flip4.setCharacter(Integer.toString(mm));
+            flip3.setText("0");
+            flip4.setText(Integer.toString(mm));
         } else {
-            flip3.setCharacter(Integer.toString(mm).substring(0, 1));
-            flip4.setCharacter(Integer.toString(mm).substring(1, 2));
+            flip3.setText(Integer.toString(mm).substring(0, 1));
+            flip4.setText(Integer.toString(mm).substring(1, 2));
         }
 
         // Seconds
         if (ss < 10) {
-            flip5.setCharacter("0");
-            flip6.setCharacter(Integer.toString(ss));
+            flip5.setText("0");
+            flip6.setText(Integer.toString(ss));
         } else {
-            flip5.setCharacter(Integer.toString(ss).substring(0, 1));
-            flip6.setCharacter(Integer.toString(ss).substring(1, 2));
+            flip5.setText(Integer.toString(ss).substring(0, 1));
+            flip6.setText(Integer.toString(ss).substring(1, 2));
         }
     }
 
