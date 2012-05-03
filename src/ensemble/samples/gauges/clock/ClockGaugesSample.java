@@ -50,13 +50,13 @@ public class ClockGaugesSample  extends Sample {
         super(600, 600);
 
         // Create some controls
-        Clock clockPst  = new ClockBuilder().create().timeZone("US/Pacific").daylightSavingTime(false).running(true).build();
+        Clock clockPst  = ClockBuilder.create().timeZone("US/Pacific").daylightSavingTime(false).running(true).build();
         clockPst.setPrefSize(120, 120);
-        Clock clockEst  = new ClockBuilder().create().timeZone("EST").daylightSavingTime(true).running(true).build();
+        Clock clockEst  = ClockBuilder.create().timeZone("EST").daylightSavingTime(true).running(true).build();
         clockEst.setPrefSize(120, 120);
-        Clock clockCet  = new ClockBuilder().create().timeZone("CET").daylightSavingTime(false).running(true).build();
+        Clock clockCet  = ClockBuilder.create().timeZone("CET").daylightSavingTime(false).running(true).build();
         clockCet.setPrefSize(120, 120);
-        Clock clockNz = new ClockBuilder().create().timeZone("NZ").daylightSavingTime(false).running(true).build();
+        Clock clockNz = ClockBuilder.create().timeZone("NZ").daylightSavingTime(false).running(true).build();
         clockNz.setPrefSize(120, 120);
 
         Text pst = new Text("San Francisco");

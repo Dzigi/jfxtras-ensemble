@@ -35,6 +35,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import jfxtras.labs.scene.control.gauge.SplitFlap;
+import jfxtras.labs.scene.control.gauge.SplitFlapBuilder;
 
 /**
  * FlipChar control.
@@ -51,7 +52,6 @@ public class SplitFlapGaugesSample extends Sample {
     private SplitFlap            flip4;
     private SplitFlap            flip5;
     private SplitFlap            flip6;
-    private String[]             timeLookup = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
     private final AnimationTimer TIMER        = new AnimationTimer() {
         @Override
         public void handle(long l) {
@@ -67,43 +67,49 @@ public class SplitFlapGaugesSample extends Sample {
         super(600, 600);
 
         // Create some controls
-        flip1 = new SplitFlap();
-        flip1.setFlipTimeInMs(350);
+        flip1 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_5)
+                                .build();
         flip1.setPrefSize(100, 172);
-        flip1.setTextColor(Color.rgb(200, 200, 200));
-        flip1.setSelection(SplitFlap.TIME);
 
-        flip2 = new SplitFlap();
-        flip2.setFlipTimeInMs(350);
-        flip2.setTextColor(Color.rgb(200, 200, 200));
+        flip2 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_9)
+                                .build();
         flip2.setPrefSize(100, 172);
-        flip1.setSelection(timeLookup);
 
-        flip3 = new SplitFlap();
-        flip3.setFlipTimeInMs(350);
+        flip3 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_5)
+                                .build();
         flip3.setPrefSize(100, 172);
-        flip3.setTextColor(Color.rgb(200, 200, 200));
-        flip3.setSelection(SplitFlap.TIME);
 
-        flip4 = new SplitFlap();
-        flip4.setFlipTimeInMs(350);
-        flip4.setTextColor(Color.rgb(200, 200, 200));
+        flip4 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_9)
+                                .build();
         flip4.setPrefSize(100, 172);
-        flip4.setSelection(timeLookup);
 
-        flip5 = new SplitFlap();
-        flip5.setFlipTimeInMs(350);
+        flip5 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .color(Color.rgb(220, 20, 0))
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_5)
+                                .build();
         flip5.setPrefSize(100, 172);
-        flip5.setSelection(SplitFlap.TIME);
-        flip5.setTextColor(Color.rgb(200, 200, 200));
-        flip5.setColor(Color.rgb(220, 20, 0));
 
-        flip6 = new SplitFlap();
-        flip6.setFlipTimeInMs(350);
+        flip6 = SplitFlapBuilder.create()
+                                .flipTimeInMs(350)
+                                .color(Color.rgb(220, 20, 0))
+                                .textColor(Color.rgb(200, 200, 200))
+                                .selection(SplitFlap.TIME_0_TO_9)
+                                .build();
         flip6.setPrefSize(100, 172);
-        flip6.setTextColor(Color.rgb(200, 200, 200));
-        flip6.setColor(Color.rgb(220, 20, 0));
-        flip6.setSelection(timeLookup);
 
         // Layout
         final GridPane pane = new GridPane();

@@ -35,6 +35,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import jfxtras.labs.scene.control.gauge.SimpleIndicator;
+import jfxtras.labs.scene.control.gauge.SimpleIndicatorBuilder;
 
 /**
  * SimpleIndicator.
@@ -102,32 +103,28 @@ public class IndicatorGaugesSample extends Sample {
         super(600, 600);
 
         // Create some controls
-        indicator1 = new SimpleIndicator();
-        indicator1.setInnerColor(STATE_COLORS[0].brighter());
-        indicator1.setOuterColor(STATE_COLORS[0].darker());
-        indicator1.setGlowVisible(false);
-
+        indicator1 = SimpleIndicatorBuilder.create()
+                                           .innerColor(STATE_COLORS[0].brighter())
+                                           .outerColor(STATE_COLORS[0].darker())
+                                           .glowVisible(false).build();
         statusText1 = new Text("system offline");
 
-        indicator2 = new SimpleIndicator();
-        indicator2.setInnerColor(STATE_COLORS[0].brighter());
-        indicator2.setOuterColor(STATE_COLORS[0].darker());
-        indicator2.setGlowVisible(false);
-
+        indicator2 = SimpleIndicatorBuilder.create()
+                                           .innerColor(STATE_COLORS[0].brighter())
+                                           .outerColor(STATE_COLORS[0].darker())
+                                           .glowVisible(false).build();
         statusText2 = new Text("system offline");
 
-        indicator3 = new SimpleIndicator();
-        indicator3.setInnerColor(STATE_COLORS[0].brighter());
-        indicator3.setOuterColor(STATE_COLORS[0].darker());
-        indicator3.setGlowVisible(false);
-
+        indicator3 = SimpleIndicatorBuilder.create()
+                                           .innerColor(STATE_COLORS[0].brighter())
+                                           .outerColor(STATE_COLORS[0].darker())
+                                           .glowVisible(false).build();
         statusText3 = new Text("system offline");
 
-        indicator4 = new SimpleIndicator();
-        indicator4.setInnerColor(STATE_COLORS[0].brighter());
-        indicator4.setOuterColor(STATE_COLORS[0].darker());
-        indicator4.setGlowVisible(false);
-
+        indicator4 = SimpleIndicatorBuilder.create()
+                                           .innerColor(STATE_COLORS[0].brighter())
+                                           .outerColor(STATE_COLORS[0].darker())
+                                           .glowVisible(false).build();
         statusText4 = new Text("system offline");
 
         // Layout

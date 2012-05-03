@@ -90,7 +90,7 @@ public class LedGaugesSample extends Sample {
             for (int col = 0 ; col < AMOUNT ; col++) {
                 int green = RND.nextInt(255);
                 int blue = RND.nextInt(128) + 128;
-                Led led = new LedBuilder().create().color(Color.rgb(0, green, blue)).build();
+                Led led = LedBuilder.create().color(Color.rgb(0, green, blue)).build();
                 column.add(led);
                 pane.add(led, col, row);
             }

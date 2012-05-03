@@ -27,11 +27,11 @@
 package ensemble.samples.gauges.odometer;
 
 import ensemble.Sample;
-import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import jfxtras.labs.scene.control.gauge.Odometer;
+import jfxtras.labs.scene.control.gauge.OdometerBuilder;
 
 
 /**
@@ -46,9 +46,7 @@ public class OdometerGaugesSample extends Sample {
         super(600, 600);
 
         // Create some controls
-        odometer = new Odometer();
-        odometer.setInterval(1000); // time for one rotation in [ms] (default 1000)
-        odometer.setNoOfDecimals(1);
+        odometer = OdometerBuilder.create().interval(1000).noOfDecimals(1).build();
         odometer.setPrefSize(100, 100);
 
         // Layout

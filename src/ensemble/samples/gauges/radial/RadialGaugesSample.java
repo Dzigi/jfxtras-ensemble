@@ -76,49 +76,49 @@ public class RadialGaugesSample extends Sample {
     public RadialGaugesSample() {
         super(600, 600);
         // Create some controls
-        StyleModel STYLE_MODEL_1 = new StyleModelBuilder().create()
-            .frameDesign(Gauge.FrameDesign.STEEL)
-            .tickLabelOrientation(Gauge.TicklabelOrientation.HORIZONTAL)
-            .pointerType(Gauge.PointerType.TYPE14)
-            .thresholdVisible(true)
-            .lcdDesign(LcdDesign.STANDARD_GREEN)
-            .build();
+        StyleModel STYLE_MODEL_1 = StyleModelBuilder.create()
+                                                    .frameDesign(Gauge.FrameDesign.STEEL)
+                                                    .tickLabelOrientation(Gauge.TicklabelOrientation.HORIZONTAL)
+                                                    .pointerType(Gauge.PointerType.TYPE14)
+                                                    .thresholdVisible(true)
+                                                    .lcdDesign(LcdDesign.STANDARD_GREEN)
+                                                    .build();
 
         radial1 = new Radial(STYLE_MODEL_1);
         radial1.setThreshold(30);
         radial1.setPrefSize(250, 250);
 
-        StyleModel STYLE_MODEL_2 = new StyleModelBuilder().create()
-            .frameDesign(Gauge.FrameDesign.STEEL)
-            .backgroundDesign(Gauge.BackgroundDesign.BLACK)
-            .tickLabelOrientation(Gauge.TicklabelOrientation.TANGENT)
-            .bargraph(true)
-            .thresholdColor(Gauge.ThresholdColor.RED)
-            .thresholdVisible(true)
-            .valueColor(ColorDef.BLUE)
-            .ledColor(LedColor.CYAN)
-            .build();
+        StyleModel STYLE_MODEL_2 = StyleModelBuilder.create()
+                                                    .frameDesign(Gauge.FrameDesign.STEEL)
+                                                    .backgroundDesign(Gauge.BackgroundDesign.BLACK)
+                                                    .tickLabelOrientation(Gauge.TicklabelOrientation.TANGENT)
+                                                    .bargraph(true)
+                                                    .thresholdColor(Gauge.ThresholdColor.RED)
+                                                    .thresholdVisible(true)
+                                                    .valueColor(ColorDef.BLUE)
+                                                    .ledColor(LedColor.CYAN)
+                                                    .build();
 
         radial2 = new RadialHalfN(STYLE_MODEL_2);
         radial2.setThreshold(50);
         radial2.setTickLabelOrientation(Gauge.TicklabelOrientation.NORMAL);
         radial2.setPrefSize(250, 250);
 
-        StyleModel STYLE_MODEL_3 = new StyleModelBuilder().create()
-            .frameDesign(Gauge.FrameDesign.BRASS)
-            .backgroundDesign(Gauge.BackgroundDesign.WHITE)
-            .knobColor(Gauge.KnobColor.BRASS)
-            .knobDesign(Gauge.KnobDesign.METAL)
-            .tickLabelOrientation(Gauge.TicklabelOrientation.NORMAL)
-            .pointerType(Gauge.PointerType.TYPE9)
-            .thresholdColor(Gauge.ThresholdColor.ORANGE)
-            .thresholdVisible(true)
-            .valueColor(ColorDef.ORANGE)
-            .ledColor(LedColor.ORANGE)
-            .lcdDesign(LcdDesign.DARK_AMBER)
-            .lcdDecimals(3)
-            .lcdDigitalFontEnabled(true)
-            .build();
+        StyleModel STYLE_MODEL_3 = StyleModelBuilder.create()
+                                                    .frameDesign(Gauge.FrameDesign.BRASS)
+                                                    .backgroundDesign(Gauge.BackgroundDesign.WHITE)
+                                                    .knobColor(Gauge.KnobColor.BRASS)
+                                                    .knobDesign(Gauge.KnobDesign.METAL)
+                                                    .tickLabelOrientation(Gauge.TicklabelOrientation.NORMAL)
+                                                    .pointerType(Gauge.PointerType.TYPE9)
+                                                    .thresholdColor(Gauge.ThresholdColor.ORANGE)
+                                                    .thresholdVisible(true)
+                                                    .valueColor(ColorDef.ORANGE)
+                                                    .ledColor(LedColor.ORANGE)
+                                                    .lcdDesign(LcdDesign.DARK_AMBER)
+                                                    .lcdDecimals(3)
+                                                    .lcdDigitalFontEnabled(true)
+                                                    .build();
 
         radial3 = new RadialQuarterN(STYLE_MODEL_3);
         radial3.setThreshold(40);

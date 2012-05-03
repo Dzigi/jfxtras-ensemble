@@ -34,9 +34,9 @@ public class StepIndicatorGaugesSample extends Sample {
     private static final Random  RND      = new Random();
     private static final long    PERIOD   = 3000000000l;
     private long                 lastCall = 0;
-    final StepIndicator          STEPS    = new StepIndicatorBuilder().create()
-                                                                      .noOfSteps(6)
-                                                                      .build();
+    final StepIndicator          STEPS    = StepIndicatorBuilder.create()
+                                                                .noOfSteps(6)
+                                                                .build();
     private final AnimationTimer TIMER    = new AnimationTimer() {
         @Override
         public void handle(long l) {

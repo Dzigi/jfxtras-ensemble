@@ -34,6 +34,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import jfxtras.labs.scene.control.gauge.Lcd;
+import jfxtras.labs.scene.control.gauge.LcdBuilder;
 import jfxtras.labs.scene.control.gauge.LcdDesign;
 import jfxtras.labs.scene.control.gauge.StyleModel;
 import jfxtras.labs.scene.control.gauge.StyleModelBuilder;
@@ -69,24 +70,24 @@ public class LcdGaugesSample extends Sample {
     };
 
     // Create some controls
-    private StyleModel STYLE_MODEL_1 = new StyleModelBuilder().create()
-        .lcdDesign(LcdDesign.STANDARD_GREEN)
-        .lcdDigitalFontEnabled(true)
-        .lcdUnitStringVisible(true)
-        .lcdThresholdVisible(true)
-        .build();
+    private StyleModel STYLE_MODEL_1 = StyleModelBuilder.create()
+                                                        .lcdDesign(LcdDesign.STANDARD_GREEN)
+                                                        .lcdDigitalFontEnabled(true)
+                                                        .lcdUnitStringVisible(true)
+                                                        .lcdThresholdVisible(true)
+                                                        .build();
 
-    private StyleModel STYLE_MODEL_2 = new StyleModelBuilder().create()
-        .lcdDesign(LcdDesign.DARK_BLUE)
-        .lcdDecimals(3)
-        .lcdNumberSystemVisible(true)
-        .build();
+    private StyleModel STYLE_MODEL_2 = StyleModelBuilder.create()
+                                                        .lcdDesign(LcdDesign.DARK_BLUE)
+                                                        .lcdDecimals(3)
+                                                        .lcdNumberSystemVisible(true)
+                                                        .build();
 
-    private StyleModel STYLE_MODEL_3 = new StyleModelBuilder().create()
-        .lcdDesign(LcdDesign.DARK_AMBER)
-        .lcdDecimals(3)
-        .lcdDigitalFontEnabled(true)
-        .build();
+    private StyleModel STYLE_MODEL_3 = StyleModelBuilder.create()
+                                                        .lcdDesign(LcdDesign.DARK_AMBER)
+                                                        .lcdDecimals(3)
+                                                        .lcdDigitalFontEnabled(true)
+                                                        .build();
 
     public LcdGaugesSample() {
         super(600, 600);
@@ -95,12 +96,22 @@ public class LcdGaugesSample extends Sample {
         lcd1 = new Lcd(STYLE_MODEL_1);
         lcd1.setThreshold(40);
         lcd1.setBargraphVisible(true);
+        lcd1.setLcdMinMeasuredValueVisible(true);
+        lcd1.setLcdMaxMeasuredValueVisible(true);
+        lcd1.setLcdFormerValueVisible(true);
         lcd1.setLcdMinMeasuredValueDecimals(3);
         lcd1.setLcdMaxMeasuredValueDecimals(3);
+        lcd1.setTitle("JFXtras");
+        lcd1.setUnit("°C");
         lcd1.setPrefSize(250, 70);
 
         lcd2 = new Lcd(STYLE_MODEL_2);
         lcd2.setThreshold(30);
+        lcd2.setTitle("JFXtras");
+        lcd2.setUnit("mm");
+        lcd2.setLcdMinMeasuredValueVisible(true);
+        lcd2.setLcdMaxMeasuredValueVisible(true);
+        lcd2.setLcdFormerValueVisible(true);
         lcd2.setPrefSize(250, 70);
 
         lcd3 = new Lcd(STYLE_MODEL_3);

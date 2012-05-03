@@ -70,7 +70,7 @@ public class BargraphGaugesSample extends Sample {
         super(600, 600);
 
         for (int i = 0 ; i < 10 ; i++) {
-            bargraphs.add(new LedBargraphBuilder().create().orientation(Orientation.VERTICAL).ledType(Led.Type.VERTICAL).peakValueVisible(true).build());
+            bargraphs.add(LedBargraphBuilder.create().orientation(Orientation.VERTICAL).ledType(Led.Type.VERTICAL).peakValueVisible(true).build());
         }
 
         StackPane stack = new StackPane();
