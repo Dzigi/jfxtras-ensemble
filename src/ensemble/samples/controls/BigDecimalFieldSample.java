@@ -20,9 +20,10 @@ import javafx.scene.layout.GridPane;
 import jfxtras.labs.scene.control.BigDecimalField;
 
 /**
- * BigDecimalField is a TextField that holds arbitrary formatted BigDecimal
+ * BigDecimalField is TextField that holds arbitrary formatted BigDecimal
  * values. The value can either be edited by hand or increased/decreased with
- * the two buttons or the arrow up/down keys.
+ * the two buttons or the arrow up/down keys. The control can be stlyled with
+ * CSS like a normal TextField.
  *
  * @see jfxtras.labs.scene.control.BigDecimalField
  */
@@ -47,8 +48,7 @@ public class BigDecimalFieldSample extends Sample {
         root.addRow(4, new Label("localized currency"), localizedCurrency);
         root.addRow(5, new Label("normal TextField"), TextFieldBuilder.create().text("1.000,12").styleClass("bigDecimalField").build());
 
-        // TODO: Fix unwanted resizing behaviour.
-        final ChoiceBox styles = new ChoiceBox(FXCollections.observableArrayList("squared", "rounded", "leaf"));
+        final ChoiceBox styles = new ChoiceBox(FXCollections.observableArrayList("rectangular corners - small font", "rounded corners - medium font", "leaf corners - large font"));
         styles.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
             @Override
