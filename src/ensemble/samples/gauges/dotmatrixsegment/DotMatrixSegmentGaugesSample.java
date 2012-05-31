@@ -68,7 +68,7 @@ public class DotMatrixSegmentGaugesSample extends Sample {
         "UVWXYZ*+-/",
         "0123456789"
     };
-    private List<DotMatrixSegment> segments      = new ArrayList<DotMatrixSegment>(10);
+    private List<DotMatrixSegment> segments    = new ArrayList<DotMatrixSegment>(10);
     private static final Random  RND           = new Random();
     private static final long    INTERVAL      = 2000000000l;
     private long                 lastTimerCall = 0;

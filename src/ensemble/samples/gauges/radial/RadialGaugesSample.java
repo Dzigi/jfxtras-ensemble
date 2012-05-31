@@ -117,7 +117,7 @@ public class RadialGaugesSample extends Sample {
                                                     .ledColor(LedColor.ORANGE)
                                                     .lcdDesign(LcdDesign.DARK_AMBER)
                                                     .lcdDecimals(3)
-                                                    .lcdDigitalFontEnabled(true)
+                                                    .lcdValueFont(Gauge.LcdFont.LCD)
                                                     .build();
 
         radial3 = new RadialQuarterN(STYLE_MODEL_3);

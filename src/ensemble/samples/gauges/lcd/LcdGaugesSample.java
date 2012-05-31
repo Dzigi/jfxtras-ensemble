@@ -33,6 +33,7 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import jfxtras.labs.scene.control.gauge.Gauge;
 import jfxtras.labs.scene.control.gauge.Lcd;
 import jfxtras.labs.scene.control.gauge.LcdBuilder;
 import jfxtras.labs.scene.control.gauge.LcdDesign;
@@ -72,13 +73,15 @@ public class LcdGaugesSample extends Sample {
     // Create some controls
     private StyleModel STYLE_MODEL_1 = StyleModelBuilder.create()
                                                         .lcdDesign(LcdDesign.STANDARD_GREEN)
-                                                        .lcdDigitalFontEnabled(true)
+                                                        .lcdValueFont(Gauge.LcdFont.LCD)
                                                         .lcdUnitStringVisible(true)
                                                         .lcdThresholdVisible(true)
                                                         .build();
 
     private StyleModel STYLE_MODEL_2 = StyleModelBuilder.create()
                                                         .lcdDesign(LcdDesign.DARK_BLUE)
+                                                        .lcdValueFont(Gauge.LcdFont.BUS)
+                                                        .lcdUnitStringVisible(true)
                                                         .lcdDecimals(3)
                                                         .lcdNumberSystemVisible(true)
                                                         .build();
@@ -86,41 +89,50 @@ public class LcdGaugesSample extends Sample {
     private StyleModel STYLE_MODEL_3 = StyleModelBuilder.create()
                                                         .lcdDesign(LcdDesign.DARK_AMBER)
                                                         .lcdDecimals(3)
-                                                        .lcdDigitalFontEnabled(true)
+                                                        .lcdValueFont(Gauge.LcdFont.PIXEL)
                                                         .build();
 
     public LcdGaugesSample() {
         super(600, 600);
 
         // Create some controls
-        lcd1 = new Lcd(STYLE_MODEL_1);
-        lcd1.setThreshold(40);
-        lcd1.setBargraphVisible(true);
-        lcd1.setLcdMinMeasuredValueVisible(true);
-        lcd1.setLcdMaxMeasuredValueVisible(true);
-        lcd1.setLcdFormerValueVisible(true);
-        lcd1.setLcdMinMeasuredValueDecimals(3);
-        lcd1.setLcdMaxMeasuredValueDecimals(3);
-        lcd1.setTitle("JFXtras");
-        lcd1.setUnit("°C");
+        lcd1 = LcdBuilder.create()
+                         .styleModel(STYLE_MODEL_1)
+                         .threshold(40)
+                         .bargraphVisible(true)
+                         .minMeasuredValueVisible(true)
+                         .minMeasuredValueDecimals(3)
+                         .maxMeasuredValueVisible(true)
+                         .maxMeasuredValueDecimals(3)
+                         .formerValueVisible(true)
+                         .title("JFXtras")
+                         .unit("°C")
+                         .build();
         lcd1.setPrefSize(250, 70);
 
-        lcd2 = new Lcd(STYLE_MODEL_2);
-        lcd2.setThreshold(30);
-        lcd2.setTitle("JFXtras");
-        lcd2.setUnit("mm");
-        lcd2.setLcdMinMeasuredValueVisible(true);
-        lcd2.setLcdMaxMeasuredValueVisible(true);
-        lcd2.setLcdFormerValueVisible(true);
+        lcd2 = LcdBuilder.create()
+                         .styleModel(STYLE_MODEL_2)
+                         .threshold(30)
+                         .minMeasuredValueVisible(true)
+                         .maxMeasuredValueVisible(true)
+                         .formerValueVisible(true)
+                         .title("Volcano-Type")
+                         .unit("mm")
+                         .build();
         lcd2.setPrefSize(250, 70);
 
         lcd3 = new Lcd(STYLE_MODEL_3);
         lcd3.setThreshold(50);
+        lcd3.setLcdFormerValueVisible(true);
+        lcd3.setValueAnimationEnabled(true);
         lcd3.setPrefSize(250, 70);
 
         lcd4 = new Lcd();
         lcd4.setLcdDesign(LcdDesign.DARK_GREEN);
+        lcd4.setTitle("JFXtras");
+        lcd4.setUnit("unit");
         lcd4.setThreshold(50);
+        lcd4.setValueAnimationEnabled(true);
         lcd4.setPrefSize(250, 70);
 
         // Layout
