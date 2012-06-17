@@ -91,8 +91,7 @@ public class SampleProjectBuilder {
         }
         // add 2 lines of copyright
         source = "/**\n" +
-                 " * Copyright (c) 2008, 2012 Oracle and/or its affiliates.\n" +
-                 " * All rights reserved. Use is subject to license terms.\n" +
+                 " * Copyright (c) 2012 JFXtras Project.  All rights reserved.\n" +
                  " */\n" + source;
         // make extends Application
         source = source.replaceAll("extends Sample(3D)?", "extends Application");
