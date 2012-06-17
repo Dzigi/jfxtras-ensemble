@@ -50,7 +50,7 @@
     <target name="-pre-jar">
         <unzip src="lib/lucene-core-3.2.0.jar" dest="${build.classes.dir}"/>
         <unzip src="lib/lucene-grouping-3.2.0.jar" dest="${build.classes.dir}"/>
-        <unzip src="lib/jfxtras-labs-0.1.jar" dest="${build.classes.dir}"/>
+        <unzip src="lib/jfxtras-labs-0.2-SNAPSHOT.jar" dest="${build.classes.dir}"/>
     </target>
   
     <target name="jfx-deployment" depends="-check-jfx-deployment">
