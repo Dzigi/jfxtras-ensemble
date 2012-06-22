@@ -31,9 +31,15 @@
  */
 package ensemble.samples.controls;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Line;
+import jfxtras.labs.scene.control.CalendarPicker;
 import ensemble.Sample;
-import java.util.GregorianCalendar;
-import jfxtras.labs.scene.control.*;
 
 /**
  * CalendarPicker.
@@ -46,8 +52,29 @@ public class CalendarPickerSample1 extends Sample {
     public CalendarPickerSample1() {
         super(300, 300);
 
-        CalendarPicker lCalendarPicker = new CalendarPicker();
+        GridPane lGridPane = new GridPane();
+        getChildren().add(lGridPane);
+        int lRowIdx = 0;
+        
+        final CalendarPicker lCalendarPicker = new CalendarPicker();
+        lGridPane.add(lCalendarPicker, 0, lRowIdx, 2, 1);
+        lRowIdx++;
 
-        getChildren().add(lCalendarPicker);
+        ComboBox<String> lComboBox = new ComboBox<String>(FXCollections.observableArrayList("Single", "Range", "Multiple"));
+        lComboBox.valueProperty().addListener(new ChangeListener<String>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+			{
+				if (newValue.startsWith("S")) lCalendarPicker.setMode(CalendarPicker.Mode.SINGLE);
+				if (newValue.startsWith("R")) lCalendarPicker.setMode(CalendarPicker.Mode.RANGE);
+				if (newValue.startsWith("M")) lCalendarPicker.setMode(CalendarPicker.Mode.MULTIPLE);
+			}
+		});
+        lComboBox.setValue("Single");
+        lComboBox.setPrefWidth(200); 
+        lGridPane.add(new Label("Mode:"), 0, lRowIdx);
+        lGridPane.add(lComboBox, 1, lRowIdx);
+        lRowIdx++;
     }
 }
