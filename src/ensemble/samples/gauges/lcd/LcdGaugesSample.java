@@ -79,7 +79,7 @@ public class LcdGaugesSample extends Sample {
                                                         .build();
 
     private StyleModel STYLE_MODEL_2 = StyleModelBuilder.create()
-                                                        .lcdDesign(LcdDesign.DARK_BLUE)
+                                                        .lcdDesign(LcdDesign.DARKBLUE)
                                                         .lcdValueFont(Gauge.LcdFont.BUS)
                                                         .lcdUnitStringVisible(true)
                                                         .lcdDecimals(3)
@@ -87,7 +87,7 @@ public class LcdGaugesSample extends Sample {
                                                         .build();
 
     private StyleModel STYLE_MODEL_3 = StyleModelBuilder.create()
-                                                        .lcdDesign(LcdDesign.DARK_AMBER)
+                                                        .lcdDesign(LcdDesign.DARKAMBER)
                                                         .lcdDecimals(3)
                                                         .lcdValueFont(Gauge.LcdFont.PIXEL)
                                                         .build();
@@ -128,7 +128,7 @@ public class LcdGaugesSample extends Sample {
         lcd3.setPrefSize(250, 70);
 
         lcd4 = new Lcd();
-        lcd4.setLcdDesign(LcdDesign.DARK_GREEN);
+        lcd4.setLcdDesign(LcdDesign.DARKGREEN);
         lcd4.setTitle("JFXtras");
         lcd4.setUnit("unit");
         lcd4.setThreshold(50);

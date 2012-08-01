@@ -115,7 +115,7 @@ public class RadialGaugesSample extends Sample {
                                                     .thresholdVisible(true)
                                                     .valueColor(ColorDef.ORANGE)
                                                     .ledColor(LedColor.ORANGE)
-                                                    .lcdDesign(LcdDesign.DARK_AMBER)
+                                                    .lcdDesign(LcdDesign.DARKAMBER)
                                                     .lcdDecimals(3)
                                                     .lcdValueFont(Gauge.LcdFont.LCD)
                                                     .build();
