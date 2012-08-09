@@ -15,6 +15,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -66,7 +67,7 @@ public class BeanPathAdapterSample extends Sample {
     private final Person person1 = new Person();
     private final Person person2 = new Person();
     private final Person person3 = new Person();
-    private static final String SHOULD_NEVER_APPEAR = "SHOULD NOT APPEAR";
+    private final String shouldNeverAppear = "SHOULD NOT APPEAR";
     private static final Hobby HOBBY_OVERWRITE = new Hobby();
     private static final Hobby HOBBY1 = new Hobby();
     private static final Hobby HOBBY2 = new Hobby();
@@ -75,8 +76,11 @@ public class BeanPathAdapterSample extends Sample {
 
     static {
         HOBBY1.setName("Hobby 1");
+        HOBBY1.setDescription("Hobby Desc 1");
         HOBBY2.setName("Hobby 2");
+        HOBBY2.setDescription("Hobby Desc 2");
         HOBBY3.setName("Hobby 3");
+        HOBBY3.setDescription("Hobby Desc 3");
         HOBBY_ALL.add(HOBBY1);
         HOBBY_ALL.add(HOBBY2);
         HOBBY_ALL.add(HOBBY3);
@@ -96,7 +100,7 @@ public class BeanPathAdapterSample extends Sample {
 
     public BeanPathAdapterSample() {
         super();
-        HOBBY_OVERWRITE.setName(SHOULD_NEVER_APPEAR);
+        HOBBY_OVERWRITE.setName(shouldNeverAppear);
         person1.setAge(50d);
         person1.setName("Person 1");
         person1.setPassword("secret");
@@ -121,6 +125,17 @@ public class BeanPathAdapterSample extends Sample {
         person1.getHobbies().add(HOBBY1);
         person1.getHobbies().add(HOBBY3);
 
+        getChildren().add(createRoot());
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                dumpPojo(personPA);
+            }
+        });
+    }
+
+    private Parent createRoot() {
         // sample application
         pojoTA.setFocusTraversable(false);
         pojoTA.setWrapText(true);
@@ -153,7 +168,7 @@ public class BeanPathAdapterSample extends Sample {
         HBox hobbyBox = beanTF("allHobbies", "hobbies", "name", Hobby.class, 0,
                 ListView.class, null, HOBBY_OVERWRITE);
         HBox langBox = beanTF("allLanguages", "languages", null, String.class,
-                0, ListView.class, null, SHOULD_NEVER_APPEAR);
+                0, ListView.class, null, shouldNeverAppear);
         personBox.getChildren().addAll(
                 beanTF("name", null, null, null, 50, null, "[a-zA-z0-9\\s]*"),
                 beanTF("age", null, null, null, 100, Slider.class, null),
@@ -209,15 +224,7 @@ public class BeanPathAdapterSample extends Sample {
         VBox.setVgrow(root, Priority.ALWAYS);
         HBox.setHgrow(root, Priority.ALWAYS);
         root.getChildren().addAll(toolBar, main);
-
-        getChildren().add(root);
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                dumpPojo(personPA);
-            }
-        });
+        return root;
     }
 
     public VBox updateListView(HBox langBox, String label) {
@@ -226,7 +233,7 @@ public class BeanPathAdapterSample extends Sample {
                 .getChildren().get(1);
         final TextField addTF = new TextField();
         addTF.setPromptText(label + " to add");
-        Button addBtn = new Button("Add \n" + label);
+        Button addBtn = new Button("Add " + label);
         addBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -237,7 +244,7 @@ public class BeanPathAdapterSample extends Sample {
                 dumpPojo(personPA);
             }
         });
-        Button remBtn = new Button("Remove Selected \n" + label + "(s)");
+        Button remBtn = new Button("Remove Selected " + label + "(s)");
         remBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -307,7 +314,8 @@ public class BeanPathAdapterSample extends Sample {
         String s = "[";
         for (Hobby h : hobbies) {
             s += '{' + Hobby.class.getSimpleName() + ": name=" + h.getName()
-                    + '}';
+                    + ", desc=" + h.getDescription() + ", hashCode="
+                    + h.hashCode() + '}';
         }
         return s += "]";
     }
@@ -353,7 +361,7 @@ public class BeanPathAdapterSample extends Sample {
             ListView<T> lv = new ListView<>(
                     FXCollections.observableArrayList(choices));
             lv.setEditable(true);
-            //lv.setCellFactory()
+            // lv.setCellFactory()
             lv.getSelectionModel().getSelectedItems()
                     .addListener(new ListChangeListener<T>() {
                 @Override
@@ -362,7 +370,7 @@ public class BeanPathAdapterSample extends Sample {
                     dumpPojo(personPA);
                 }
             });
-            lv.setMaxSize(100d, 100d);
+            lv.setMaxHeight(100d);
             lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             lv.itemsProperty().addListener(
                     new ChangeListener<ObservableList<?>>() {
@@ -378,7 +386,7 @@ public class BeanPathAdapterSample extends Sample {
             // ObservableList<T> of lv.getItems() we need
             // to also pass in the choice class)
             personPA.bindContentBidirectional(path, itemPath, itemType,
-                    lv.getItems(), (Class<T>) choices[0].getClass(), null);
+                    lv.getItems(), (Class<T>) choices[0].getClass(), null, null);
             if (selectionPath != null && !selectionPath.isEmpty()) {
                 // POJO binding magic (due to erasure of T in
                 // ReadOnlyUnbackedObservableList<T> of
@@ -389,7 +397,7 @@ public class BeanPathAdapterSample extends Sample {
                 personPA.bindContentBidirectional(selectionPath, itemPath,
                         itemType, lv.getSelectionModel().getSelectedItems(),
                         (Class<T>) choices[0].getClass(),
-                        lv.getSelectionModel());
+                        lv.getSelectionModel(), path);
             }
             // personPA.bindBidirectional(path, lv.itemsProperty(),
             // (Class<T>) choices[0].getClass());
@@ -434,7 +442,6 @@ public class BeanPathAdapterSample extends Sample {
                             .length() < maxChars));
                 }
             };
-            tf.setMinHeight(USE_PREF_SIZE);
             tf.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(
@@ -489,7 +496,6 @@ public class BeanPathAdapterSample extends Sample {
                             .length() < maxChars));
                 }
             };
-            tf.setMinHeight(USE_PREF_SIZE);
             tf.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(
