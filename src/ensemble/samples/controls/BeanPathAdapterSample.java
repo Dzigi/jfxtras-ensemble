@@ -1,8 +1,11 @@
 package ensemble.samples.controls;
 
 import ensemble.Sample;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import javafx.application.Platform;
@@ -37,6 +40,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import jfxtras.labs.scene.control.BeanPathAdapter;
+import jfxtras.labs.scene.control.CalendarPicker;
 
 /**
  * BeanPathAdapter is an adaptor that permits POJO fields to be bound to JavaFX
@@ -46,9 +50,11 @@ import jfxtras.labs.scene.control.BeanPathAdapter;
  * that are Lists, Sets, and Maps to JavaFX controls ObservableList,
  * ObservableSet, and ObservableMap as well as SelectionModel to/from a POJO
  * field List/Set/Map. Switching between POJOs is as simple as calling
- * {@linkplain BeanPathAdapter#setBean(java.lang.Object)} which will update all
+ * BeanPathAdapter#setBean(java.lang.Object) which will update all
  * bound JavaFX controls with values contained within the new or updated POJO.
  *
+ * See jfxtras.labs.scene.control.BeanPathAdapter for examples
+ * 
  * @see jfxtras.labs.scene.control.BeanPathAdapter
  */
 public class BeanPathAdapterSample extends Sample {
@@ -187,6 +193,20 @@ public class BeanPathAdapterSample extends Sample {
                 CheckBox.class, null), langBox, hobbyBox);
         beanPane.getChildren().add(personBox);
 
+        // Demo calendar
+        CalendarPicker lCalendarPicker = new CalendarPicker();
+        lCalendarPicker.setMaxWidth(300d);
+        personPA.bindBidirectional("dob", lCalendarPicker.calendarProperty(), Calendar.class);
+        lCalendarPicker.calendarProperty().addListener(new ChangeListener<Calendar>() {
+            @Override
+            public void changed(ObservableValue<? extends Calendar> observable,
+                    Calendar oldValue, Calendar newValue) {
+                dumpPojo(personPA);
+            }
+        });
+        personBox.getChildren().add(lCalendarPicker);
+
+        // Direct bean update section
         final TextField pojoNameTF = new TextField();
         pojoNameTF.setPromptText("Selected person's name to set via POJO");
         Button pojoNameBtn = new Button("Set Person's Name Via POJO"
@@ -275,6 +295,8 @@ public class BeanPathAdapterSample extends Sample {
                             + p.getBean().getName()
                             + ", age="
                             + p.getBean().getAge()
+                            + ", dob="
+                            + (p.getBean().getDob() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ssz").format(p.getBean().getDob()) : null)
                             + ", password="
                             + p.getBean().getPassword()
                             + ", address.street="
@@ -532,6 +554,7 @@ public class BeanPathAdapterSample extends Sample {
         private String password;
         private Address address;
         private double age;
+        private Date dob;
         private Set<String> languages;
         private Set<Hobby> hobbies;
         private Set<String> allLanguages;
@@ -567,6 +590,14 @@ public class BeanPathAdapterSample extends Sample {
 
         public void setAge(double age) {
             this.age = age;
+        }
+
+        public Date getDob() {
+            return dob;
+        }
+
+        public void setDob(Date dob) {
+            this.dob = dob;
         }
 
         public Set<String> getLanguages() {
