@@ -68,7 +68,7 @@ public class MatrixPanelSample extends Sample {
                                     .font(MatrixFont.FF_15x32)
                                     .fontGap(Gap.SIMPLE)
                                     .align(Align.LEFT)
-                                    .effect(Effect.SPRAY).lapse(120)
+                                    .effect(Effect.SPRAY).lapse(50)
                                     .postEffect(PostEffect.PAUSE).pause(2000)
                                     .order(RotationOrder.FIRST).clear(true)
                                     .build(),
@@ -82,7 +82,7 @@ public class MatrixPanelSample extends Sample {
                                     .fontGap(Gap.SIMPLE)
                                     .align(Align.LEFT)
                                     .effect(Effect.SCROLL_RIGHT)
-                                    .lapse(120)
+                                    .lapse(50)
                                     .postEffect(PostEffect.PAUSE)
                                     .pause(4000)
                                     .order(RotationOrder.SECOND).clear(true)

@@ -66,7 +66,8 @@ public class Pages {
         // ADD PAGES TO NEW CATEGORY
         newSamples.getChildren().addAll(   
             new SamplePage((SamplePage)getPage("SAMPLES/Gauges/Radial/Radial Gauges")),
-            new SamplePage((SamplePage)getPage("SAMPLES/Controls/Calendar Text Field"))
+            new SamplePage((SamplePage)getPage("SAMPLES/Controls/Calendar Text Field")),
+            new SamplePage((SamplePage)getPage("SAMPLES/Controls/Bean Path Adapter"))
         );
     }
 

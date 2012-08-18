@@ -76,7 +76,7 @@ public class Ensemble2 extends Application {
         // Enable using system proxy if set
         System.setProperty("java.net.useSystemProxies", "true");
     }
-    public static final String DEFAULT_DOCS_URL = "http://download.oracle.com/javafx/2.0/api/";
+    public static final String DEFAULT_DOCS_URL = "http://docs.oracle.com/javafx/2/api/";
     
     private static Ensemble2 ensemble2;
     private static boolean isApplet = false;
