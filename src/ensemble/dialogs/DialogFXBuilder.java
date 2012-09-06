@@ -56,6 +56,7 @@ import java.util.List;
  */
 public class DialogFXBuilder <B extends DialogFXBuilder<B>> extends ControlBuilder<B> implements Builder<DialogFX> {
     private HashMap<String, Property> properties = new HashMap<>();
+    private HashMap<String, Property> properties = new HashMap<String, Property>();
 
     protected DialogFXBuilder() {}
 
