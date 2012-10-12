@@ -37,8 +37,7 @@ import jfxtras.labs.scene.control.CalendarPicker;
 import ensemble.Sample;
 
 /**
- * CalendarPicker.
- * The coder is responsible for the background (in this way the picker does not enforce a certain styling).
+ * A date picker, but since Date is deprecated, it picks a Calendar.
  *
  * @see jfxtras.labs.scene.control.CalendarPicker
  */

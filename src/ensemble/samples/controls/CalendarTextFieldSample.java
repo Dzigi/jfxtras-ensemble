@@ -33,7 +33,7 @@ import jfxtras.labs.internal.scene.control.skin.CalendarTextFieldCaspianSkin;
 import jfxtras.labs.scene.control.CalendarTextField;
 
 /**
- * CalendarTextField using CalendarPicker.
+ * A TextField for entering a Calendar (since Date is deprecated), using CalendarPicker as a popup.
  *
  * @see jfxtras.labs.scene.control.CalendarTextField
  * @see jfxtras.labs.scene.control.CalendarPicker

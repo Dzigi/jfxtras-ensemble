@@ -36,7 +36,7 @@ import jfxtras.labs.scene.control.CalendarTimeTextField;
 import ensemble.Sample;
 
 /**
- * CalendarTimeTextField.
+ * A TextField for entering a time using the CalenderTimePicker as a popup.
  *
  * @see jfxtras.labs.scene.control.CalendarTimerTextField
  */

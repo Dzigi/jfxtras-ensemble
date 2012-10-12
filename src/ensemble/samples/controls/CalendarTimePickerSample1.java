@@ -36,8 +36,7 @@ import jfxtras.labs.scene.control.CalendarTimePicker;
 import ensemble.Sample;
 
 /**
- * CalendarTimePicker.
- * The coder is responsible for the background (in this way the picker does not enforce a certain styling).
+ * A time picker which (to align with the CalendarPicker) set the value of the hours and minutes in a Calendar.
  *
  * @see jfxtras.labs.scene.control.CalendarTimerPicker
  */
