@@ -58,15 +58,15 @@ public class CalendarPickerSample1 extends Sample {
 	
 	        ComboBox<String> lComboBox = new ComboBox<String>(FXCollections.observableArrayList("Single", "Range", "Multiple"));
 	        lComboBox.valueProperty().addListener(new ChangeListener<String>()
-			{
-				@Override
-				public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
-				{
-					if (newValue.startsWith("S")) lCalendarPicker.setMode(CalendarPicker.Mode.SINGLE);
-					if (newValue.startsWith("R")) lCalendarPicker.setMode(CalendarPicker.Mode.RANGE);
-					if (newValue.startsWith("M")) lCalendarPicker.setMode(CalendarPicker.Mode.MULTIPLE);
-				}
-			});
+                {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue)
+                    {
+                            if (newValue.startsWith("S")) lCalendarPicker.setMode(CalendarPicker.Mode.SINGLE);
+                            if (newValue.startsWith("R")) lCalendarPicker.setMode(CalendarPicker.Mode.RANGE);
+                            if (newValue.startsWith("M")) lCalendarPicker.setMode(CalendarPicker.Mode.MULTIPLE);
+                    }
+                });
 	        lComboBox.setValue("Single");
 	        lComboBox.setPrefWidth(200); 
 	        lGridPane.add(new Label("Mode:"), 0, lRowIdx);

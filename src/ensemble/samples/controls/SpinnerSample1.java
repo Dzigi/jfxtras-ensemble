@@ -44,7 +44,7 @@ import jfxtras.labs.util.StringConverterFactory;
  * The basic forms of the spinner: list, editable list, integer
  * The way they are constructed (using "with") probably will be replaced with a builder.
  *
- * @see jfxtras.labs.scene.control.Spinner
+ * @see jfxtras.labs.scene.control.ListSpinner
  */
 public class SpinnerSample1 extends Sample {
 
@@ -55,7 +55,7 @@ public class SpinnerSample1 extends Sample {
         
         // simple cyclic spinner on an array of strings
         {
-            Spinner<String> lSpinner = new Spinner<String>("first", "second", "third")
+            ListSpinner<String> lSpinner = new ListSpinner<String>("first", "second", "third")
                                     .withCyclic(true)
                                     ;
             lVBox.getChildren().add(lSpinner);
@@ -64,7 +64,7 @@ public class SpinnerSample1 extends Sample {
         // editable cycle spinner
         {
             final ObservableList<String> lObservableList = FXCollections.observableArrayList("a", "b", "c", "d", "e");
-            Spinner<String> lSpinner = new Spinner<String>( lObservableList )
+            ListSpinner<String> lSpinner = new ListSpinner<String>( lObservableList )
                     .withCyclic(true)
                     .withEditable(true)
                     .withStringConverter(StringConverterFactory.forString())
@@ -83,7 +83,7 @@ public class SpinnerSample1 extends Sample {
         
         // integer spinner
         {
-            Spinner<Integer> lSpinner = new Spinner<Integer>(new SpinnerIntegerList(10, 110));
+            ListSpinner<Integer> lSpinner = new ListSpinner<Integer>(new ListSpinnerIntegerList(10, 110));
             lVBox.getChildren().add(lSpinner);
         }
 
@@ -91,9 +91,9 @@ public class SpinnerSample1 extends Sample {
     }
     
         
-    protected Spinner shallowClone(Spinner s1)
+    protected ListSpinner shallowClone(ListSpinner s1)
     {
-        Spinner s2 = new Spinner(s1.getItems());
+        ListSpinner s2 = new ListSpinner(s1.getItems());
         s2.setEditable(s1.isEditable());
         s2.setCyclic(s1.isCyclic());
         s2.setStringConverter(s1.getStringConverter());

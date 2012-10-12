@@ -50,7 +50,7 @@ import jfxtras.labs.util.StringConverterFactory;
  * The same spinners as Sample1, with arrows laid out in all kinds of different ways: horizontal or vertical direction, and leading, trailing or split positions.
  * (The vertical split layout also uses alignment CENTER.)
  *
- * @see jfxtras.labs.scene.control.Spinner
+ * @see jfxtras.labs.scene.control.ListSpinner
  */
 public class SpinnerSample2 extends SpinnerSample1 {
 
@@ -77,8 +77,8 @@ public class SpinnerSample2 extends SpinnerSample1 {
                 VBox lVBox = new VBox(3.0);
                 for (Node lNode : lInitialVBox.getChildren())
                 {
-                    Spinner lSpinner = shallowClone((Spinner)lNode);
-                    lSpinner.setArrowPosition(Spinner.ArrowPosition.LEADING);
+                    ListSpinner lSpinner = shallowClone((ListSpinner)lNode);
+                    lSpinner.setArrowPosition(ListSpinner.ArrowPosition.LEADING);
                     lVBox.getChildren().add(lSpinner);
                 }
                 lColumnVBox.getChildren().add(lVBox);
@@ -89,8 +89,8 @@ public class SpinnerSample2 extends SpinnerSample1 {
                 VBox lVBox = new VBox(3.0);
                 for (Node lNode : lInitialVBox.getChildren())
                 {
-                    Spinner lSpinner = shallowClone((Spinner)lNode);
-                    lSpinner.setArrowPosition(Spinner.ArrowPosition.SPLIT);
+                    ListSpinner lSpinner = shallowClone((ListSpinner)lNode);
+                    lSpinner.setArrowPosition(ListSpinner.ArrowPosition.SPLIT);
                     lVBox.getChildren().add(lSpinner);
                 }
                 lColumnVBox.getChildren().add(lVBox);
@@ -108,8 +108,8 @@ public class SpinnerSample2 extends SpinnerSample1 {
                 VBox lVBox = new VBox(3.0);
                 for (Node lNode : lInitialVBox.getChildren())
                 {
-                    Spinner lSpinner = shallowClone((Spinner)lNode);
-                    lSpinner.setArrowDirection(Spinner.ArrowDirection.VERTICAL);
+                    ListSpinner lSpinner = shallowClone((ListSpinner)lNode);
+                    lSpinner.setArrowDirection(ListSpinner.ArrowDirection.VERTICAL);
                     lVBox.getChildren().add(lSpinner);
                 }
                 lColumnVBox.getChildren().add(lVBox);
@@ -119,9 +119,9 @@ public class SpinnerSample2 extends SpinnerSample1 {
                 VBox lVBox = new VBox(3.0);
                 for (Node lNode : lInitialVBox.getChildren())
                 {
-                    Spinner lSpinner = shallowClone((Spinner)lNode);
-                    lSpinner.setArrowDirection(Spinner.ArrowDirection.VERTICAL);
-                    lSpinner.setArrowPosition(Spinner.ArrowPosition.LEADING);
+                    ListSpinner lSpinner = shallowClone((ListSpinner)lNode);
+                    lSpinner.setArrowDirection(ListSpinner.ArrowDirection.VERTICAL);
+                    lSpinner.setArrowPosition(ListSpinner.ArrowPosition.LEADING);
                     lVBox.getChildren().add(lSpinner);
                 }
                 lColumnVBox.getChildren().add(lVBox);
@@ -131,9 +131,9 @@ public class SpinnerSample2 extends SpinnerSample1 {
                 VBox lVBox = new VBox(3.0);
                 for (Node lNode : lInitialVBox.getChildren())
                 {
-                    Spinner lSpinner = shallowClone((Spinner)lNode);
-                    lSpinner.setArrowDirection(Spinner.ArrowDirection.VERTICAL);
-                    lSpinner.setArrowPosition(Spinner.ArrowPosition.SPLIT);
+                    ListSpinner lSpinner = shallowClone((ListSpinner)lNode);
+                    lSpinner.setArrowDirection(ListSpinner.ArrowDirection.VERTICAL);
+                    lSpinner.setArrowPosition(ListSpinner.ArrowPosition.SPLIT);
                     lSpinner.setAlignment(Pos.CENTER);
                     lVBox.getChildren().add(lSpinner);
                 }
