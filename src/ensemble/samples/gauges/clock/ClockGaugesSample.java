@@ -31,7 +31,9 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -50,53 +52,22 @@ public class ClockGaugesSample  extends Sample {
         super(600, 600);
 
         // Create some controls
-        Clock clockPst  = ClockBuilder.create().timeZone("US/Pacific").daylightSavingTime(false).running(true).build();
-        clockPst.setPrefSize(120, 120);
-        Clock clockEst  = ClockBuilder.create().timeZone("EST").daylightSavingTime(true).running(true).build();
-        clockEst.setPrefSize(120, 120);
-        Clock clockCet  = ClockBuilder.create().timeZone("CET").daylightSavingTime(false).running(true).build();
-        clockCet.setPrefSize(120, 120);
-        Clock clockNz = ClockBuilder.create().timeZone("NZ").daylightSavingTime(false).running(true).build();
-        clockNz.setPrefSize(120, 120);
-
-        Text pst = new Text("San Francisco");
-        pst.setFill(Color.WHITE);
-        Text est = new Text("New York");
-        est.setFill(Color.WHITE);
-        Text cet = new Text("Berlin");
-        cet.setFill(Color.WHITE);
-        Text nzst = new Text("Wellington");
-        nzst.setFill(Color.WHITE);
-
-        StackPane stack = new StackPane();
-        Rectangle background = new Rectangle(600, 600);
-        background.setFill(Color.rgb(30, 30, 30));
-        stack.getChildren().add(background);
+        Clock clockPst = ClockBuilder.create().title("San Francisco").timeZone("US/Pacific").clockStyle(Clock.ClockStyle.IOS6).autoDimEnabled(true).running(true).build();
+        Clock clockEst = ClockBuilder.create().title("New York").timeZone("EST").clockStyle(Clock.ClockStyle.IOS6).autoDimEnabled(true).running(true).build();
+        Clock clockCet = ClockBuilder.create().title("Berlin").timeZone("CET").autoDimEnabled(true).running(true).build();
+        Clock clockNz  = ClockBuilder.create().title("Wellington").timeZone("NZ").autoDimEnabled(true).running(true).build();
 
         // Layout
-        final GridPane pane = new GridPane();
-        pane.setPadding(new Insets(5));
-        pane.setHgap(5);
-        pane.setVgap(5);
-        pane.setAlignment(Pos.TOP_CENTER);
+        HBox row1 = new HBox();
+        row1.getChildren().addAll(clockPst, clockEst);
+        HBox row2 = new HBox();
+        row2.getChildren().addAll(clockCet, clockNz);
 
-        // Add controls to the layout
-        pane.add(clockPst, 1, 1);
-        pane.add(pst, 1, 2);
-        GridPane.setHalignment(pst, HPos.CENTER);
-        pane.add(clockEst, 2, 1);
-        pane.add(est, 2, 2);
-        GridPane.setHalignment(est, HPos.CENTER);
-        pane.add(clockCet, 3, 1);
-        pane.add(cet, 3, 2);
-        GridPane.setHalignment(cet, HPos.CENTER);
-        pane.add(clockNz, 4, 1);
-        pane.add(nzst, 4, 2);
-        GridPane.setHalignment(nzst, HPos.CENTER);
 
-        stack.getChildren().add(pane);
+        VBox pane = new VBox();
+        pane.getChildren().addAll(row1, row2);
 
-        getChildren().add(stack);
+        getChildren().add(pane);
     }
 
     @Override

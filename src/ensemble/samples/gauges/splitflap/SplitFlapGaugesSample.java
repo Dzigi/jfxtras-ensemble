@@ -68,48 +68,54 @@ public class SplitFlapGaugesSample extends Sample {
 
         // Create some controls
         flip1 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_5)
                                 .build();
-        flip1.setPrefSize(100, 172);
 
         flip2 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_9)
                                 .build();
-        flip2.setPrefSize(100, 172);
 
         flip3 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_5)
                                 .build();
-        flip3.setPrefSize(100, 172);
 
         flip4 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_9)
                                 .build();
-        flip4.setPrefSize(100, 172);
 
         flip5 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .color(Color.rgb(220, 20, 0))
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_5)
                                 .build();
-        flip5.setPrefSize(100, 172);
 
         flip6 = SplitFlapBuilder.create()
+                                .prefWidth(80)
+                                .prefHeight(133)
                                 .flipTimeInMs(350)
                                 .color(Color.rgb(220, 20, 0))
                                 .textColor(Color.rgb(200, 200, 200))
                                 .selection(SplitFlap.TIME_0_TO_9)
                                 .build();
-        flip6.setPrefSize(100, 172);
 
         // Layout
         final GridPane pane = new GridPane();
