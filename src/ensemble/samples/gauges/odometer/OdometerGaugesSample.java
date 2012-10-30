@@ -46,8 +46,12 @@ public class OdometerGaugesSample extends Sample {
         super(600, 600);
 
         // Create some controls
-        odometer = OdometerBuilder.create().interval(1000).noOfDecimals(1).build();
-        odometer.setPrefSize(100, 100);
+        odometer = OdometerBuilder.create()
+                                  .prefWidth(700)
+                                  .prefHeight(100)
+                                  .interval(1000)
+                                  .noOfDecimals(1)
+                                  .build();
 
         // Layout
         final GridPane pane = new GridPane();
