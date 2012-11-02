@@ -33,10 +33,12 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import jfxtras.labs.scene.control.gauge.NixieTube;
+import jfxtras.labs.scene.control.gauge.NixieTubeBuilder;
 
 /**
  * Nixie Tube..
@@ -86,37 +88,25 @@ public class NixieTubeGaugesSample extends Sample {
     public NixieTubeGaugesSample() {
         super(600, 600);
 
-        StackPane stack = new StackPane();
-        Rectangle background = new Rectangle(600, 600);
-        background.setFill(Color.rgb(30, 30, 30));
-        stack.getChildren().add(background);
-
         // Create some controls
-        tube1 = new NixieTube();
-        tube2 = new NixieTube();
-        tube3 = new NixieTube();
-        tube4 = new NixieTube();
-        tube5 = new NixieTube();
-        tube6 = new NixieTube();
+        tube1 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
+        tube2 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
+        tube3 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
+        tube4 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
+        tube5 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
+        tube6 = NixieTubeBuilder.create().prefWidth(70).prefHeight(118).build();
 
         // Layout
-        final GridPane pane = new GridPane();
-        pane.setPadding(new Insets(5));
-        pane.setHgap(5);
-        pane.setVgap(5);
-        pane.setAlignment(Pos.TOP_CENTER);
+        final HBox clock = new HBox();
+        clock.setSpacing(5);
+        clock.getChildren().addAll(tube1, tube2, tube3, tube4, tube5, tube6);
 
-        // Add controls to the layout
-        pane.add(tube1, 1, 1);
-        pane.add(tube2, 2, 1);
-        pane.add(tube3, 6, 1);
-        pane.add(tube4, 7, 1);
-        pane.add(tube5, 11, 1);
-        pane.add(tube6, 12, 1);
+        StackPane pane = new StackPane();
+        Rectangle background = new Rectangle(445, 120);
+        background.setFill(Color.BLACK);
+        pane.getChildren().addAll(background, clock);
 
-        stack.getChildren().add(pane);
-
-        getChildren().add(stack);
+        getChildren().add(pane);
         setClock();
     }
 
