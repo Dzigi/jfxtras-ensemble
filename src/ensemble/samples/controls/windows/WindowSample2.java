@@ -97,7 +97,7 @@ public class WindowSample2 extends Sample {
         MediaPlayer mediaPlayer = new MediaPlayer(new Media(MEDIA_URL));
         MediaView mediaView = new MediaView(mediaPlayer);
         // the mediaView should always fit inside the window
-        mediaView.fitWidthProperty().bind(w.prefWidthProperty());
+        mediaView.fitWidthProperty().bind(w.getContentPane().widthProperty());
         mediaPlayer.play();
 
         // add it as window content
