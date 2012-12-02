@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2012, JFXtras
  *   All rights reserved.
  *
@@ -80,18 +80,15 @@ public class RadialMenuSample extends Sample {
 
 	    @Override
 	    public void handle(final MouseEvent event) {
+		RadialMenuSample.this.lastInitialAngleValue = RadialMenuSample.this.radialMenu
+			.getInitialAngle();
+		RadialMenuSample.this.lastOffsetValue = RadialMenuSample.this.radialMenu
+			.getOffset();
 		if (event.getButton() == MouseButton.SECONDARY) {
 		    RadialMenuSample.this.showRadialMenu(event.getX(),
 			    event.getY());
-		} else {
-		    RadialMenuSample.this.lastInitialAngleValue = RadialMenuSample.this.radialMenu
-			    .getInitialAngle();
-		    RadialMenuSample.this.lastOffsetValue = RadialMenuSample.this.radialMenu
-			    .getOffset();
-
-		    if (!event.isConsumed()) {
-			RadialMenuSample.this.hideRadialMenu();
-		    }
+		} else if (!event.isConsumed()) {
+		    RadialMenuSample.this.hideRadialMenu();
 		}
 	    }
 
