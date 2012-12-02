@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2012, JFXtras
  *   All rights reserved.
  *
