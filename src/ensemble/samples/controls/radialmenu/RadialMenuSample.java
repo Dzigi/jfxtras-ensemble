@@ -38,26 +38,20 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxBuilder;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ColorPickerBuilder;
 import javafx.scene.control.Label;
-import javafx.scene.control.LabelBuilder;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SliderBuilder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.RotateEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontBuilder;
 import javafx.util.Duration;
-import jfxtras.labs.scene.control.RadialMenu;
-import jfxtras.labs.scene.control.RadialMenuItem;
+import jfxtras.labs.scene.control.radialmenu.RadialContainerMenuItem;
+import jfxtras.labs.scene.control.radialmenu.RadialMenu;
+import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
 import ensemble.Sample;
 
 /**
@@ -90,7 +84,14 @@ public class RadialMenuSample extends Sample {
 		    RadialMenuSample.this.showRadialMenu(event.getX(),
 			    event.getY());
 		} else {
-		    RadialMenuSample.this.hideRadialMenu();
+		    RadialMenuSample.this.lastInitialAngleValue = RadialMenuSample.this.radialMenu
+			    .getInitialAngle();
+		    RadialMenuSample.this.lastOffsetValue = RadialMenuSample.this.radialMenu
+			    .getOffset();
+
+		    if (!event.isConsumed()) {
+			RadialMenuSample.this.hideRadialMenu();
+		    }
 		}
 	    }
 
@@ -139,12 +140,30 @@ public class RadialMenuSample extends Sample {
 
     }
 
-    private void hideRadialMenu() {
-	this.lastInitialAngleValue = this.radialMenu.getInitialAngle();
-	this.lastOffsetValue = this.radialMenu.getOffset();
+    // private void hideRadialMenu() {
+    // this.lastInitialAngleValue = this.radialMenu.getInitialAngle();
+    // this.lastOffsetValue = this.radialMenu.getOffset();
+    //
+    // final FadeTransition fade = FadeTransitionBuilder.create()
+    // .node(this.radialMenu).fromValue(1).toValue(0)
+    // .duration(Duration.millis(300))
+    // .onFinished(new EventHandler<ActionEvent>() {
+    //
+    // @Override
+    // public void handle(final ActionEvent arg0) {
+    // RadialMenuSample.this.radialMenu.setVisible(false);
+    // }
+    // }).build();
+    //
+    // final ParallelTransition transition = ParallelTransitionBuilder
+    // .create().children(fade).build();
+    //
+    // transition.play();
+    // }
 
+    private void hideRadialMenu() {
 	final FadeTransition fade = FadeTransitionBuilder.create()
-		.node(this.radialMenu).fromValue(1).toValue(0)
+		.node(RadialMenuSample.this.radialMenu).fromValue(1).toValue(0)
 		.duration(Duration.millis(300))
 		.onFinished(new EventHandler<ActionEvent>() {
 
@@ -164,6 +183,7 @@ public class RadialMenuSample extends Sample {
 	if (this.radialMenu.isVisible()) {
 	    this.lastInitialAngleValue = this.radialMenu.getInitialAngle();
 	    this.lastOffsetValue = this.radialMenu.getOffset();
+	    this.radialMenu.setVisible(false);
 	}
 	this.radialMenu.setTranslateX(x);
 	this.radialMenu.setTranslateY(y);
@@ -191,129 +211,129 @@ public class RadialMenuSample extends Sample {
 	transition.play();
     }
 
-    public Node createRadialMenuModifierControls() {
-	final GridPane controls = new GridPane();
-	controls.setVgap(5);
-
-	this.initialAngleSlider = SliderBuilder.create().min(-360).max(360)
-		.value(-23).minWidth(200).majorTickUnit(30)
-		.showTickLabels(true).build();
-
-	this.radialMenu.initialAngleProperty().bindBidirectional(
-		this.initialAngleSlider.valueProperty());
-
-	controls.add(LabelBuilder.create().text("initial angle ").build(), 0, 1);
-	controls.add(this.initialAngleSlider, 1, 1);
-
-	final Slider innerRadiusSlider = SliderBuilder.create().min(0).max(300)
-		.value(30).minWidth(200).majorTickUnit(30).showTickLabels(true)
-		.build();
-
-	this.radialMenu.innerRadiusProperty().bindBidirectional(
-		innerRadiusSlider.valueProperty());
-
-	controls.add(LabelBuilder.create().text("inner radius ").build(), 0, 3);
-	controls.add(innerRadiusSlider, 1, 3);
-
-	final Slider radiusSlider = SliderBuilder.create().min(100).max(500)
-		.value(100).minWidth(200).majorTickUnit(30)
-		.showTickLabels(true).build();
-
-	this.radialMenu.radiusProperty().bindBidirectional(
-		radiusSlider.valueProperty());
-
-	controls.add(LabelBuilder.create().text("radius ").build(), 0, 4);
-	controls.add(radiusSlider, 1, 4);
-
-	final Slider offsetSlider = SliderBuilder.create().min(0).max(100)
-		.value(10).minWidth(200).majorTickUnit(30).showTickLabels(true)
-		.build();
-
-	this.radialMenu.offsetProperty().bindBidirectional(
-		offsetSlider.valueProperty());
-
-	controls.add(LabelBuilder.create().text("offset ").build(), 0, 5);
-	controls.add(offsetSlider, 1, 5);
-
-	final ColorPicker colorPicker = ColorPickerBuilder.create()
-		.value(Color.LIGHTBLUE).build();
-
-	colorPicker.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(final ActionEvent t) {
-		RadialMenuSample.this.radialMenu.setBackgroundColor(colorPicker
-			.getValue());
-	    }
-	});
-
-	controls.add(LabelBuilder.create().text("backgroundColor ").build(), 0,
-		6);
-	controls.add(colorPicker, 1, 6);
-
-	final ColorPicker backgroundMouseOnPicker = ColorPickerBuilder.create()
-		.value(Color.LIGHTBLUE.darker()).build();
-
-	backgroundMouseOnPicker.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(final ActionEvent t) {
-		RadialMenuSample.this.radialMenu
-			.setBackgroundMouseOnColor(backgroundMouseOnPicker
-				.getValue());
-	    }
-	});
-
-	controls.add(LabelBuilder.create().text("background mouse on Color ")
-		.build(), 0, 7);
-	controls.add(backgroundMouseOnPicker, 1, 7);
-
-	final ColorPicker strokePicker = ColorPickerBuilder.create()
-		.value(Color.DARKBLUE).build();
-
-	strokePicker.setOnAction(new EventHandler<ActionEvent>() {
-	    @Override
-	    public void handle(final ActionEvent t) {
-		RadialMenuSample.this.radialMenu.setStrokeColor(strokePicker
-			.getValue());
-	    }
-	});
-
-	controls.add(LabelBuilder.create().text("stroke Color ").build(), 0, 8);
-	controls.add(strokePicker, 1, 8);
-
-	final CheckBox clockwiseCheckBox = CheckBoxBuilder.create()
-		.selected(false).build();
-
-	this.radialMenu.clockwiseProperty().bindBidirectional(
-		clockwiseCheckBox.selectedProperty());
-
-	controls.add(LabelBuilder.create().text("clockwise ").build(), 0, 9);
-	controls.add(clockwiseCheckBox, 1, 9);
-
-	final CheckBox backgroundVisibleCheckBox = CheckBoxBuilder.create()
-		.selected(true).build();
-
-	this.radialMenu.backgroundVisibleProperty().bindBidirectional(
-		backgroundVisibleCheckBox.selectedProperty());
-
-	controls.add(LabelBuilder.create().text("background visible ").build(),
-		0, 10);
-	controls.add(backgroundVisibleCheckBox, 1, 10);
-
-	final CheckBox strokeVisibleCheckBox = CheckBoxBuilder.create()
-		.selected(true).build();
-
-	this.radialMenu.strokeVisibleProperty().bindBidirectional(
-		strokeVisibleCheckBox.selectedProperty());
-
-	controls.add(LabelBuilder.create().text("stroke visible ").build(), 0,
-		11);
-	controls.add(strokeVisibleCheckBox, 1, 11);
-
-	controls.translateXProperty().set(400);
-	controls.translateYProperty().set(0);
-
-	return controls;
-    }
+    // public Node createControlNodes() {
+    //
+    // final GridPane controls = new GridPane();
+    // controls.setVgap(15);
+    //
+    // this.initialAngleSlider = SliderBuilder.create().min(-360).max(360)
+    // .value(-23).minWidth(200).majorTickUnit(30)
+    // .showTickLabels(true).build();
+    //
+    // this.radialMenu.initialAngleProperty().bindBidirectional(
+    // this.initialAngleSlider.valueProperty());
+    //
+    // controls.add(LabelBuilder.create().text("initial angle ").build(), 0, 1);
+    // controls.add(this.initialAngleSlider, 1, 1);
+    //
+    // final Slider innerRadiusSlider = SliderBuilder.create().min(0).max(300)
+    // .value(30).minWidth(200).majorTickUnit(30).showTickLabels(true)
+    // .build();
+    //
+    // this.radialMenu.innerRadiusProperty().bindBidirectional(
+    // innerRadiusSlider.valueProperty());
+    //
+    // controls.add(LabelBuilder.create().text("inner radius ").build(), 0, 3);
+    // controls.add(innerRadiusSlider, 1, 3);
+    //
+    // final Slider radiusSlider = SliderBuilder.create().min(100).max(500)
+    // .value(100).minWidth(200).majorTickUnit(30)
+    // .showTickLabels(true).build();
+    //
+    // this.radialMenu.radiusProperty().bind(radiusSlider.valueProperty());
+    //
+    // controls.add(LabelBuilder.create().text("radius ").build(), 0, 4);
+    // controls.add(radiusSlider, 1, 4);
+    //
+    // final Slider offsetSlider = SliderBuilder.create().min(0).max(100)
+    // .value(10).minWidth(200).majorTickUnit(30).showTickLabels(true)
+    // .build();
+    //
+    // this.radialMenu.offsetProperty().bindBidirectional(
+    // offsetSlider.valueProperty());
+    //
+    // controls.add(LabelBuilder.create().text("offset ").build(), 0, 5);
+    // controls.add(offsetSlider, 1, 5);
+    //
+    // final ColorPicker colorPicker = ColorPickerBuilder.create()
+    // .value(Color.LIGHTBLUE).build();
+    //
+    // colorPicker.setOnAction(new EventHandler<ActionEvent>() {
+    // @Override
+    // public void handle(final ActionEvent t) {
+    // RadialMenuSample.this.radialMenu.setBackgroundColor(colorPicker
+    // .getValue());
+    // }
+    // });
+    //
+    // controls.add(LabelBuilder.create().text("backgroundColor ").build(), 0,
+    // 6);
+    // controls.add(colorPicker, 1, 6);
+    //
+    // final ColorPicker backgroundMouseOnPicker = ColorPickerBuilder.create()
+    // .value(Color.LIGHTBLUE.darker()).build();
+    //
+    // backgroundMouseOnPicker.setOnAction(new EventHandler<ActionEvent>() {
+    // @Override
+    // public void handle(final ActionEvent t) {
+    // RadialMenuSample.this.radialMenu
+    // .setBackgroundMouseOnColor(backgroundMouseOnPicker
+    // .getValue());
+    // }
+    // });
+    //
+    // controls.add(LabelBuilder.create().text("background mouse on Color ")
+    // .build(), 0, 7);
+    // controls.add(backgroundMouseOnPicker, 1, 7);
+    //
+    // final ColorPicker strokePicker = ColorPickerBuilder.create()
+    // .value(Color.DARKBLUE).build();
+    //
+    // strokePicker.setOnAction(new EventHandler<ActionEvent>() {
+    // @Override
+    // public void handle(final ActionEvent t) {
+    // RadialMenuSample.this.radialMenu.setStrokeColor(strokePicker
+    // .getValue());
+    // }
+    // });
+    //
+    // controls.add(LabelBuilder.create().text("stroke Color ").build(), 0, 8);
+    // controls.add(strokePicker, 1, 8);
+    //
+    // final CheckBox clockwiseCheckBox = CheckBoxBuilder.create()
+    // .selected(false).build();
+    //
+    // this.radialMenu.clockwiseProperty().bindBidirectional(
+    // clockwiseCheckBox.selectedProperty());
+    //
+    // controls.add(LabelBuilder.create().text("clockwise ").build(), 0, 9);
+    // controls.add(clockwiseCheckBox, 1, 9);
+    //
+    // final CheckBox backgroundVisibleCheckBox = CheckBoxBuilder.create()
+    // .selected(true).build();
+    //
+    // this.radialMenu.backgroundVisibleProperty().bindBidirectional(
+    // backgroundVisibleCheckBox.selectedProperty());
+    //
+    // controls.add(LabelBuilder.create().text("background visible ").build(),
+    // 0, 10);
+    // controls.add(backgroundVisibleCheckBox, 1, 10);
+    //
+    // final CheckBox strokeVisibleCheckBox = CheckBoxBuilder.create()
+    // .selected(true).build();
+    //
+    // this.radialMenu.strokeVisibleProperty().bindBidirectional(
+    // strokeVisibleCheckBox.selectedProperty());
+    //
+    // controls.add(LabelBuilder.create().text("stroke visible ").build(), 0,
+    // 11);
+    // controls.add(strokeVisibleCheckBox, 1, 11);
+    //
+    // controls.translateXProperty().set(400);
+    // controls.translateYProperty().set(0);
+    //
+    // return controls;
+    // }
 
     public Node createRadialMenu() {
 	this.radialMenu = new RadialMenu(-23, 30, 100, 10, Color.LIGHTBLUE,
@@ -378,8 +398,28 @@ public class RadialMenuSample extends Sample {
 
 	};
 
-	this.radialMenu.addMenuItem(new RadialMenuItem(45, "forward", forward,
+	final ImageView fiveSec = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample5SecIcon.png"))).build();
+	final ImageView tenSec = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample10SecIcon.png"))).build();
+	final ImageView twentySec = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample20SecIcon.png"))).build();
+	final RadialContainerMenuItem forwardItem = new RadialContainerMenuItem(
+		45, "forward", forward);
+	forwardItem.addMenuItem(new RadialMenuItem(30, "forward 5'", fiveSec,
 		handler));
+	forwardItem.addMenuItem(new RadialMenuItem(30, "forward 10'", tenSec,
+		handler));
+	forwardItem.addMenuItem(new RadialMenuItem(30, "forward 20'",
+		twentySec, handler));
+
+	this.radialMenu.addMenuItem(forwardItem);
 
 	this.radialMenu.addMenuItem(new RadialMenuItem(45, "pause", pause,
 		handler));
@@ -390,8 +430,28 @@ public class RadialMenuSample extends Sample {
 	this.radialMenu.addMenuItem(new RadialMenuItem(45, "stop", stop,
 		handler));
 
-	this.radialMenu.addMenuItem(new RadialMenuItem(45, "backward",
-		backward, handler));
+	final RadialContainerMenuItem backwardItem = new RadialContainerMenuItem(
+		45, "backward", backward);
+	final ImageView fiveSecBack = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample5SecIcon.png"))).build();
+	final ImageView tenSecBack = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample10SecIcon.png"))).build();
+	final ImageView twentySecBack = ImageViewBuilder
+		.create()
+		.image(new Image(this.getClass().getResourceAsStream(
+			"RadialMenuSample20SecIcon.png"))).build();
+	backwardItem.addMenuItem(new RadialMenuItem(30, "backward 5'",
+		fiveSecBack, handler));
+	backwardItem.addMenuItem(new RadialMenuItem(30, "bacward 10'",
+		tenSecBack, handler));
+	backwardItem.addMenuItem(new RadialMenuItem(30, "bacward 20'",
+		twentySecBack, handler));
+
+	this.radialMenu.addMenuItem(backwardItem);
 
 	return this.radialMenu;
     }
