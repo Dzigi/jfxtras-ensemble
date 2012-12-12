@@ -47,10 +47,15 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.RotateEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.LinearGradientBuilder;
+import javafx.scene.paint.StopBuilder;
 import javafx.scene.text.FontBuilder;
 import javafx.util.Duration;
 import jfxtras.labs.scene.control.radialmenu.RadialContainerMenuItem;
 import jfxtras.labs.scene.control.radialmenu.RadialMenu;
+import jfxtras.labs.scene.control.radialmenu.RadialMenu.CenterVisibility;
 import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
 import ensemble.Sample;
 
@@ -333,8 +338,58 @@ public class RadialMenuSample extends Sample {
     // }
 
     public Node createRadialMenu() {
-	this.radialMenu = new RadialMenu(-23, 30, 100, 10, Color.LIGHTBLUE,
-		Color.LIGHTBLUE.darker(), Color.DARKBLUE, false);
+
+	// final RadialGradient background = RadialGradientBuilder
+	// .create()
+	// .centerX(0)
+	// .centerY(0)
+	// .radius(0.7)
+	// .stops(StopBuilder.create().offset(0.0).color(Color.LIGHTGREY)
+	// .build(),
+	// StopBuilder.create().offset(1.0)
+	// .color(Color.LIGHTGREY.darker()).build())
+	// .build();
+
+	// final RadialGradient backgroundMouseOn = RadialGradientBuilder
+	// .create()
+	// .centerX(0)
+	// .centerY(0)
+	// .radius(1)
+	// .stops(StopBuilder.create().offset(0.0).color(Color.LIGHTGREY)
+	// .build(),
+	// StopBuilder.create().offset(1.0)
+	// .color(Color.LIGHTGREY.darker()).build())
+	// .build();
+
+	final LinearGradient background = LinearGradientBuilder
+		.create()
+		.startX(0)
+		.startY(0)
+		.endX(1.0)
+		.endY(1.0)
+		.cycleMethod(CycleMethod.NO_CYCLE)
+		.stops(StopBuilder.create().offset(0.0).color(Color.LIGHTGREY)
+			.build(),
+			StopBuilder.create().offset(0.6)
+				.color(Color.LIGHTGREY.darker()).build())
+		.build();
+
+	final LinearGradient backgroundMouseOn = LinearGradientBuilder
+		.create()
+		.startX(0)
+		.startY(0)
+		.endX(1.0)
+		.endY(1.0)
+		.cycleMethod(CycleMethod.NO_CYCLE)
+		.stops(StopBuilder.create().offset(0.0).color(Color.LIGHTGREY)
+			.build(),
+			StopBuilder.create().offset(0.8)
+				.color(Color.LIGHTGREY.darker()).build())
+		.build();
+
+	this.radialMenu = new RadialMenu(-37, 30, 100, 5, background,
+		backgroundMouseOn, Color.DARKGREY.darker().darker(),
+		Color.DARKGREY.darker(), false, CenterVisibility.ALWAYS, null);
 
 	this.radialMenu.setTranslateX(200);
 	this.radialMenu.setTranslateY(200);
@@ -408,7 +463,7 @@ public class RadialMenuSample extends Sample {
 		.image(new Image(this.getClass().getResourceAsStream(
 			"RadialMenuSample20SecIcon.png"))).build();
 	final RadialContainerMenuItem forwardItem = new RadialContainerMenuItem(
-		45, "forward", forward);
+		50, "forward", forward);
 	forwardItem.addMenuItem(new RadialMenuItem(30, "forward 5'", fiveSec,
 		handler));
 	forwardItem.addMenuItem(new RadialMenuItem(30, "forward 10'", tenSec,
@@ -418,17 +473,17 @@ public class RadialMenuSample extends Sample {
 
 	this.radialMenu.addMenuItem(forwardItem);
 
-	this.radialMenu.addMenuItem(new RadialMenuItem(45, "pause", pause,
+	this.radialMenu.addMenuItem(new RadialMenuItem(50, "pause", pause,
 		handler));
 
-	this.radialMenu.addMenuItem(new RadialMenuItem(45, "play", play,
+	this.radialMenu.addMenuItem(new RadialMenuItem(50, "play", play,
 		handler));
 
-	this.radialMenu.addMenuItem(new RadialMenuItem(45, "stop", stop,
+	this.radialMenu.addMenuItem(new RadialMenuItem(50, "stop", stop,
 		handler));
 
 	final RadialContainerMenuItem backwardItem = new RadialContainerMenuItem(
-		45, "backward", backward);
+		50, "backward", backward);
 	final ImageView fiveSecBack = ImageViewBuilder
 		.create()
 		.image(new Image(this.getClass().getResourceAsStream(
