@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -39,8 +40,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 import jfxtras.labs.scene.control.BeanPathAdapter;
 import jfxtras.labs.scene.control.CalendarPicker;
+import jfxtras.labs.scene.control.BeanPathAdapter.FieldPathValue;
 
 /**
  * BeanPathAdapter is an adaptor that permits POJO fields to be bound to JavaFX
@@ -59,6 +62,7 @@ import jfxtras.labs.scene.control.CalendarPicker;
  */
 public class BeanPathAdapterSample extends Sample {
 
+    int dumpCnt = 0;
     ChoiceBox<String> pBox;
     TextArea pojoTA = new TextArea();
     public static final String[] STATES = new String[]{"AK", "AL", "AR",
@@ -137,15 +141,23 @@ public class BeanPathAdapterSample extends Sample {
         person1.setHobbies(new LinkedHashSet<Hobby>());
         person1.getHobbies().add(HOBBY1);
         person1.getHobbies().add(HOBBY3);
-
         getChildren().add(createRoot());
+    }
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                dumpPojo(personPA);
-            }
-        });
+    @Override
+    public void play() {
+        super.play();
+        dumpPojo(null, null, personPA);
+        personPA.fieldPathValueProperty().addListener(
+                new ChangeListener<FieldPathValue>() {
+                    @Override
+                    public void changed(
+                            ObservableValue<? extends FieldPathValue> observable,
+                            FieldPathValue oldValue,
+                            FieldPathValue newValue) {
+                        dumpPojo(oldValue, newValue, personPA);
+                    }
+                });
     }
 
     private Parent createRoot() {
@@ -204,13 +216,6 @@ public class BeanPathAdapterSample extends Sample {
         CalendarPicker lCalendarPicker = new CalendarPicker();
         lCalendarPicker.setMaxWidth(300d);
         personPA.bindBidirectional("dob", lCalendarPicker.calendarProperty(), Calendar.class);
-        lCalendarPicker.calendarProperty().addListener(new ChangeListener<Calendar>() {
-            @Override
-            public void changed(ObservableValue<? extends Calendar> observable,
-                    Calendar oldValue, Calendar newValue) {
-                dumpPojo(personPA);
-            }
-        });
         personBox.getChildren().add(lCalendarPicker);
 
         // Direct bean update section
@@ -222,7 +227,7 @@ public class BeanPathAdapterSample extends Sample {
             @Override
             public void handle(MouseEvent event) {
                 personPA.getBean().setName(pojoNameTF.getText());
-                dumpPojo(personPA);
+                dumpPojo(null, null, personPA);
             }
         });
         VBox pojoBox = new VBox(10);
@@ -268,7 +273,6 @@ public class BeanPathAdapterSample extends Sample {
                     return;
                 }
                 listView.getItems().add(addTF.getText());
-                dumpPojo(personPA);
             }
         });
         Button remBtn = new Button("Remove Selected " + label + "(s)");
@@ -292,7 +296,8 @@ public class BeanPathAdapterSample extends Sample {
     }
 
     @SafeVarargs
-    public final void dumpPojo(final BeanPathAdapter<Person>... ps) {
+    public final void dumpPojo(final FieldPathValue oldValue,
+            final FieldPathValue newValue, final BeanPathAdapter<Person>... ps) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -302,10 +307,10 @@ public class BeanPathAdapterSample extends Sample {
                             + p.getBean().getName()
                             + ", age="
                             + p.getBean().getAge()
-                            + ", dob="
-                            + (p.getBean().getDob() != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ssz").format(p.getBean().getDob()) : null)
                             + ", password="
                             + p.getBean().getPassword()
+                            + ", role="
+                            + p.getBean().getRole()
                             + ", address.street="
                             + p.getBean().getAddress().getStreet()
                             + ", address.location.state="
@@ -315,15 +320,29 @@ public class BeanPathAdapterSample extends Sample {
                             .getCountry()
                             + ", address.location.international="
                             + p.getBean().getAddress().getLocation()
-                            .isInternational() + ", allLanguages="
+                            .isInternational()
+                            + ", allLanguages="
                             + dumpPrimCollection(p.getBean().getAllLanguages())
                             + ", languages="
                             + dumpPrimCollection(p.getBean().getLanguages())
                             + ", allHobbies="
                             + dumpHobbyNames(p.getBean().getAllHobbies())
                             + ", hobbies="
-                            + dumpHobbyNames(p.getBean().getHobbies()) + "}\n";
+                            + dumpHobbyNames(p.getBean().getHobbies())
+                            + ", dob="
+                            + (p.getBean().getDob() != null ? new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ssz").format(p
+                            .getBean().getDob().getTime()) : null)
+                            + "}\n";
                 }
+                if (oldValue != null) {
+                    System.out.println(String.format("OLD: %1$s", oldValue));
+                }
+                if (newValue != null) {
+                    System.out.println(String.format("NEW: %1$s", newValue));
+                }
+                System.out.println(String.format("POJO (count=%1$s): %2$s",
+                        ++dumpCnt, dump));
                 pojoTA.setText(dump);
             }
         });
@@ -358,14 +377,6 @@ public class BeanPathAdapterSample extends Sample {
         Control ctrl;
         if (controlType == CheckBox.class) {
             CheckBox cb = new CheckBox();
-            cb.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(
-                        ObservableValue<? extends Boolean> observable,
-                        Boolean oldValue, Boolean newValue) {
-                    dumpPojo(personPA);
-                }
-            });
             // POJO binding magic...
             personPA.bindBidirectional(path, cb.selectedProperty());
             ctrl = cb;
@@ -374,12 +385,6 @@ public class BeanPathAdapterSample extends Sample {
                     FXCollections.observableArrayList(choices));
             cb.setPromptText("Select State");
             cb.setPrefWidth(100d);
-            cb.valueProperty().addListener(new InvalidationListener() {
-                @Override
-                public void invalidated(Observable observable) {
-                    dumpPojo(personPA);
-                }
-            });
             // POJO binding magic (due to erasure of T in
             // ObjectProperty<T> of cb.valueProperty() we need
             // to also pass in the choice class)
@@ -391,26 +396,8 @@ public class BeanPathAdapterSample extends Sample {
                     FXCollections.observableArrayList(choices));
             lv.setEditable(true);
             // lv.setCellFactory()
-            lv.getSelectionModel().getSelectedItems()
-                    .addListener(new ListChangeListener<T>() {
-                @Override
-                public void onChanged(
-                        ListChangeListener.Change<? extends T> paramChange) {
-                    dumpPojo(personPA);
-                }
-            });
             lv.setMaxHeight(100d);
             lv.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            lv.itemsProperty().addListener(
-                    new ChangeListener<ObservableList<?>>() {
-                        @Override
-                        public void changed(
-                                ObservableValue<? extends ObservableList<?>> observable,
-                                ObservableList<?> oldValue,
-                                ObservableList<?> newValue) {
-                            dumpPojo(personPA);
-                        }
-                    });
             // POJO binding magic (due to erasure of T in
             // ObservableList<T> of lv.getItems() we need
             // to also pass in the choice class)
@@ -440,12 +427,6 @@ public class BeanPathAdapterSample extends Sample {
             sl.setBlockIncrement(1);
             sl.setMax(maxChars + 1);
             sl.setSnapToTicks(true);
-            sl.valueProperty().addListener(new InvalidationListener() {
-                @Override
-                public void invalidated(Observable observable) {
-                    dumpPojo(personPA);
-                }
-            });
             // POJO binding magic...
             personPA.bindBidirectional(path, sl.valueProperty());
             ctrl = sl;
@@ -471,14 +452,6 @@ public class BeanPathAdapterSample extends Sample {
                             .length() < maxChars));
                 }
             };
-            tf.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(
-                        ObservableValue<? extends String> observable,
-                        String oldValue, String newValue) {
-                    dumpPojo(personPA);
-                }
-            });
             // POJO binding magic...
             personPA.bindBidirectional(path, tf.textProperty());
             ctrl = tf;
@@ -525,14 +498,6 @@ public class BeanPathAdapterSample extends Sample {
                             .length() < maxChars));
                 }
             };
-            tf.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(
-                        ObservableValue<? extends String> observable,
-                        String oldValue, String newValue) {
-                    dumpPojo(personPA);
-                }
-            });
             // POJO binding magic...
             personPA.bindBidirectional(path, tf.textProperty());
             ctrl = tf;
@@ -559,13 +524,14 @@ public class BeanPathAdapterSample extends Sample {
 
         private String name;
         private String password;
+        private Role role;
         private Address address;
         private double age;
-        private Date dob;
         private Set<String> languages;
         private Set<Hobby> hobbies;
         private Set<String> allLanguages;
         private Set<Hobby> allHobbies;
+        private Calendar dob;
 
         public String getName() {
             return name;
@@ -583,6 +549,14 @@ public class BeanPathAdapterSample extends Sample {
             this.password = password;
         }
 
+        public Role getRole() {
+            return role;
+        }
+
+        public void setRole(Role role) {
+            this.role = role;
+        }
+
         public Address getAddress() {
             return address;
         }
@@ -597,14 +571,6 @@ public class BeanPathAdapterSample extends Sample {
 
         public void setAge(double age) {
             this.age = age;
-        }
-
-        public Date getDob() {
-            return dob;
-        }
-
-        public void setDob(Date dob) {
-            this.dob = dob;
         }
 
         public Set<String> getLanguages() {
@@ -637,6 +603,81 @@ public class BeanPathAdapterSample extends Sample {
 
         public void setAllHobbies(Set<Hobby> allHobbies) {
             this.allHobbies = allHobbies;
+        }
+
+        public Calendar getDob() {
+            return dob;
+        }
+
+        public void setDob(Calendar dob) {
+            this.dob = dob;
+        }
+    }
+
+    public static class Role {
+
+        private String name;
+        private String description;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result
+                    + ((description == null) ? 0 : description.hashCode());
+            result = prime * result + ((name == null) ? 0 : name.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            Role other = (Role) obj;
+            if (description == null) {
+                if (other.description != null) {
+                    return false;
+                }
+            } else if (!description.equals(other.description)) {
+                return false;
+            }
+            if (name == null) {
+                if (other.name != null) {
+                    return false;
+                }
+            } else if (!name.equals(other.name)) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return getName() != null && getDescription() != null ? getName()
+                    + ':' + getDescription() : "";
         }
     }
 
@@ -712,6 +753,12 @@ public class BeanPathAdapterSample extends Sample {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("Hobby@%1$s [name=%2$s, description=%3$s]",
+                    hashCode(), name, description);
         }
     }
 }
