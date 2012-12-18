@@ -44,6 +44,8 @@ import javafx.stage.WindowEvent;
 import jfxtras.labs.scene.control.BeanPathAdapter;
 import jfxtras.labs.scene.control.CalendarPicker;
 import jfxtras.labs.scene.control.BeanPathAdapter.FieldPathValue;
+import jfxtras.labs.scene.control.CalendarTextField;
+import jfxtras.labs.scene.control.ListSpinner;
 
 /**
  * BeanPathAdapter is an adaptor that permits POJO fields to be bound to JavaFX
@@ -112,6 +114,15 @@ public class BeanPathAdapterSample extends Sample {
         LANG_ALL.add(LANG2);
         LANG_ALL.add(LANG3);
     }
+    private static final Role ROLE1 = new Role();
+    private static final Role ROLE2 = new Role();
+
+    static {
+        ROLE1.setName("User");
+        ROLE1.setDescription("General user role");
+        ROLE2.setName("Admin");
+        ROLE2.setDescription("Administrator role");
+    }
     private final BeanPathAdapter<Person> personPA = new BeanPathAdapter<>(
             person1);
 
@@ -121,6 +132,7 @@ public class BeanPathAdapterSample extends Sample {
         person1.setAge(50d);
         person1.setName("Person 1");
         person1.setPassword("secret");
+        person1.setDob(Calendar.getInstance());
         Address addy = new Address();
         Location loc = new Location();
         loc.setCountry(1);
@@ -209,14 +221,11 @@ public class BeanPathAdapterSample extends Sample {
                 beanTF("address.location.country", null, null, null, 2,
                 ComboBox.class, "[0-9]", new Integer[]{0, 1, 2, 3}),
                 beanTF("address.location.international", null, null, null, 0,
-                CheckBox.class, null), langBox, hobbyBox);
+                CheckBox.class, null), beanTF("dob", null, null, null, 0, CalendarTextField.class,
+                null),
+                beanTF("role", null, null, null, 0, ListSpinner.class,
+                null, ROLE1, ROLE2, null), langBox, hobbyBox);
         beanPane.getChildren().add(personBox);
-
-        // Demo calendar
-        CalendarPicker lCalendarPicker = new CalendarPicker();
-        lCalendarPicker.setMaxWidth(300d);
-        personPA.bindBidirectional("dob", lCalendarPicker.calendarProperty(), Calendar.class);
-        personBox.getChildren().add(lCalendarPicker);
 
         // Direct bean update section
         final TextField pojoNameTF = new TextField();
@@ -455,6 +464,17 @@ public class BeanPathAdapterSample extends Sample {
             // POJO binding magic...
             personPA.bindBidirectional(path, tf.textProperty());
             ctrl = tf;
+        } else if (controlType == CalendarTextField.class) {
+            final CalendarTextField ctf = new CalendarTextField();
+            personPA.bindBidirectional(path, ctf.valueProperty(),
+                    Calendar.class);
+            ctrl = ctf;
+        } else if (controlType == ListSpinner.class) {
+            final ListSpinner<T> ls = new ListSpinner<>(choices)
+                    .withCyclic(true);
+            personPA.bindBidirectional(path, ls.valueProperty(),
+                    (Class<T>) choices[0].getClass());
+            ctrl = ls;
         } else {
             final TextField tf = controlType == PasswordField.class ? new PasswordField() {
                 @Override
