@@ -30,7 +30,12 @@ import ensemble.Sample;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -94,16 +99,37 @@ public class WindowSample2 extends Sample {
         w.getRightIcons().add(customIcon);
 
         // create a media player & view
-        MediaPlayer mediaPlayer = new MediaPlayer(new Media(MEDIA_URL));
+        mediaPlayer = new MediaPlayer(new Media(MEDIA_URL));
         MediaView mediaView = new MediaView(mediaPlayer);
-        // the mediaView should always fit inside the window
-        mediaView.fitWidthProperty().bind(w.getContentPane().widthProperty());
-        mediaPlayer.play();
 
+        // volume
+        Slider volumeSlider = new Slider(0.0, 1.0, 0.1);
+        volumeSlider.orientationProperty().set(Orientation.VERTICAL);
+        volumeSlider.tooltipProperty().set(new Tooltip("Volume"));
+        volumeSlider.valueProperty().bindBidirectional(mediaPlayer.volumeProperty());
+        volumeSlider.valueProperty().set(0.0);
+        
         // add it as window content
-        w.getContentPane().getChildren().add(mediaView);
-
+        BorderPane borderPane = new BorderPane();
+        w.getContentPane().getChildren().add(borderPane);
+        borderPane.setCenter(mediaView);
+        borderPane.setRight(volumeSlider);
+        mediaView.fitWidthProperty().bind(borderPane.widthProperty().subtract(volumeSlider.widthProperty()));
+        
         // add the window to the canvas
-        getChildren().add(w);
+        getChildren().add(w);    
+    }
+    final MediaPlayer mediaPlayer;
+
+    @Override
+    public void play()
+    {
+        mediaPlayer.play();
+    }
+
+    @Override
+    public void stop()
+    {
+        mediaPlayer.stop();
     }
 }
