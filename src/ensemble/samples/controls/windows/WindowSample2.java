@@ -28,14 +28,17 @@ package ensemble.samples.controls.windows;
 
 import ensemble.Sample;
 import javafx.animation.ScaleTransition;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -68,7 +71,7 @@ public class WindowSample2 extends Sample {
         w.setLayoutY(10);
 
         // define the initial window size
-        w.setPrefSize(300, 200);
+        w.setPrefSize(468, 200);
 
         // either to the left
         w.getLeftIcons().add(new CloseIcon(w));  
@@ -101,6 +104,7 @@ public class WindowSample2 extends Sample {
         // create a media player & view
         mediaPlayer = new MediaPlayer(new Media(MEDIA_URL));
         MediaView mediaView = new MediaView(mediaPlayer);
+        mediaPlayer.play();
 
         // volume
         Slider volumeSlider = new Slider(0.0, 1.0, 0.1);
@@ -114,11 +118,14 @@ public class WindowSample2 extends Sample {
         w.getContentPane().getChildren().add(borderPane);
         borderPane.setCenter(mediaView);
         borderPane.setRight(volumeSlider);
+        borderPane.setMinWidth(0);
+        borderPane.setPadding(new Insets(0,3,0,3));
         mediaView.fitWidthProperty().bind(borderPane.widthProperty().subtract(volumeSlider.widthProperty()));
         
         // add the window to the canvas
         getChildren().add(w);    
     }
+    
     final MediaPlayer mediaPlayer;
 
     @Override
